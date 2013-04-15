@@ -8,6 +8,9 @@ gem 'rails', '3.2.13'
 # use sqlite locally and pg on heroku
 group :development, :test do
   gem 'sqlite3'
+  gem "rspec-rails", ">= 2.0.1"
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
 end
 group :production do
   gem 'pg'
