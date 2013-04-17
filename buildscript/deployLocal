@@ -1,0 +1,6 @@
+echo "===Migrate db"
+rake db:migrate
+
+echo "===Starting server"
+rails server
+

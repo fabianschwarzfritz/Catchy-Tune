@@ -1,0 +1,2 @@
+echo "===Executing cucumber tests"
+bundle exec cucumber
