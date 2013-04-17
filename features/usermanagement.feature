@@ -18,7 +18,7 @@ Feature: User management
     And I should not be logged in
 
 
-  Scenario: Register
+  Scenario: Register successfully
     Given I am on the login page
     And I fill in "username" with "fabian@schwarz-fritz.de"
     And I fill in "password" with "password"
