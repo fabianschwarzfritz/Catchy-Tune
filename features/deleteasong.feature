@@ -7,9 +7,4 @@ Feature: Delete a song
     And I am the artist of the song "Walk the line"
     When I press "Delete"
     Then I am on the search page
-
-    Given I am on the search page
-    And I fill in "search" with "Jonny Cash"
-    When I press "Search"
-    Then I should not see "Walk The Line"
-
+    And the song "Walk the line" does no longer exist
