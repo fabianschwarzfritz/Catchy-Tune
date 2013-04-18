@@ -1,5 +1,5 @@
-echo "===Migrate db"
-heroku run rake db:migrate
-
 echo "===Push to heroku"
 git push heroku master
+
+echo "===Migrate db"
+heroku run rake db:migrate
