@@ -1,5 +1,8 @@
 echo "===Push to heroku"
 git push heroku master
 
+echo "===Testing"
+heroku run rake test --app catchytune
+
 echo "===Migrate db"
-heroku run rake db:migrate
+heroku run rake db:migrate --app catchytune
