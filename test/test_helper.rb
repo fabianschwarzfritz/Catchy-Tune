@@ -12,6 +12,7 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   # Drop all collections after each test case.
   def teardown
+    # Automatically remove all collections after testing
     MongoMapper.database.collections.each do |coll|
       coll.remove
     end
