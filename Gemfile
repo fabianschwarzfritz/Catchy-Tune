@@ -8,6 +8,7 @@ gem 'rails', '3.2.13'
 # Mongodb
 gem 'mongo_mapper'
 gem 'bson_ext'
+gem 'faker'
 
 # use sqlite locally and pg on heroku
 group :development, :test do
@@ -15,7 +16,6 @@ group :development, :test do
   gem "rspec-rails", ">= 2.0.1"
   gem 'cucumber-rails'
   gem 'database_cleaner'
-  gem 'faker'
 end
 group :production do
   gem 'pg'
