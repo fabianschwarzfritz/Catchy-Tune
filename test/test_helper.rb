@@ -14,7 +14,11 @@ class ActiveSupport::TestCase
   def teardown
     # Automatically remove all collections after testing
     MongoMapper.database.collections.each do |coll|
-      coll.remove
+      MongoMapper.database.collections.each do |coll|
+        unless /^system/.match(coll.name)
+          coll.remove
+        end
+      end
     end
   end
 
