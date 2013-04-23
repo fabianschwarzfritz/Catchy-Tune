@@ -1,8 +1,8 @@
 class Track
   include MongoMapper::Document
 
+  key :artist_id, ObjectId
   key :name, String
-  belongs_to :artists
 
-  attr_accessible :name, :artists
+  belongs_to :artist
 end
