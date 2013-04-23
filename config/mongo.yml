@@ -15,3 +15,7 @@ test:
 production:
   adapter: mongodb
   uri: <%= ENV['MONGOHQ_URL'] %>
+
+staging:
+  adapter: mongodb
+  uri: <%= ENV['MONGOHQ_URL'] %>
