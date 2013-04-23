@@ -8,6 +8,7 @@ development:
   database: catchytune_development
 
 test:
+  <<: *defaults
   adapter: mongodb
   database: catchytune_test
 
