@@ -4,15 +4,13 @@ defaults: &defaults
 
 development:
   <<: *defaults
+  adapter: mongodb
   database: catchytune_development
 
 test:
-  <<: *defaults
+  adapter: mongodb
   database: catchytune_test
 
-# set these environment variables on your prod server
 production:
-  <<: *defaults
-  database: catchytune
-  username: <%= ENV['MONGO_USERNAME'] %>
-  password: <%= ENV['MONGO_PASSWORD'] %>
+  adapter: mongodb
+  uri: <%= ENV['MONGOHQ_URL'] %>
