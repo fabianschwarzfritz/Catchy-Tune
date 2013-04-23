@@ -61,6 +61,8 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    gherkin (2.11.8)
+      multi_json (~> 1.3)
     gherkin (2.11.8-x86-mingw32)
       multi_json (~> 1.3)
     hike (1.2.2)
@@ -82,6 +84,7 @@ GEM
       activesupport (~> 3.0)
       plucky (~> 0.5.2)
     multi_json (1.7.2)
+    nokogiri (1.5.9)
     nokogiri (1.5.9-x86-mingw32)
     pg (0.14.1-x86-mingw32)
     plucky (0.5.2)
@@ -147,6 +150,7 @@ GEM
       nokogiri (~> 1.3)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
