@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 100.times do |artistnumber|
-  a = Artist.create name: Faker::Lorem.words(rand(7)+1).join(' ') << artistnumber
+  a = Artist.create name: Faker::Name.name
   10.times do |tracknumber|
     a.tracks.create name: Faker::Lorem.words(rand(10)+1).join(' ') << tracknumber
   end
