@@ -1,4 +1,8 @@
 class ArtistsController < ApplicationController
+
+  before_filter :authenticate_user
+  layout 'home'
+
   # GET /artists
   # GET /artists.json
   def index

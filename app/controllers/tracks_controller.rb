@@ -1,4 +1,8 @@
 class TracksController < ApplicationController
+
+  before_filter :authenticate_user
+  layout 'home'
+
   # GET /tracks
   # GET /tracks.json
   def index
