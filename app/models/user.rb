@@ -7,6 +7,7 @@ class User
 
   key :email, String
   key :password, String
+  key :hashed_password, String
 
   before_save :hash_password
   validates :email,
@@ -20,7 +21,7 @@ class User
 
   private
   def hash_password
-    self.password = BCrypt::Password.create(@password)
+    self.hashed_password = BCrypt::Password.create(@password)
   end
 
   public
