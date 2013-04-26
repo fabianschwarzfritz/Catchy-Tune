@@ -3,11 +3,20 @@ require 'bcrypt'
 class User
   include MongoMapper::Document
 
-  before_save :hash_password
+  attr_accessible :email, :password, :password_confirmation
 
   key :email, String
   key :password, String
-  attr_accessible :email, :password
+
+  before_save :hash_password
+  validates :email,
+            :presence => true,
+            :uniqueness => true
+  validates :password,
+            :presence => true,
+            :length => {:minimum => 5, :maximum => 40},
+            :confirmation => true
+  validates_confirmation_of :password
 
   private
   def hash_password
