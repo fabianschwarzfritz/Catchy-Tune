@@ -9,6 +9,7 @@ gem 'rails', '3.2.13'
 gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'faker'
+gem 'bcrypt-ruby'
 
 # use sqlite locally and pg on heroku
 group :development, :test do
@@ -22,11 +23,10 @@ group :production do
 end
 
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails', '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
