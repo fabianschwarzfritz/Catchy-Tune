@@ -1,7 +1,7 @@
 Catchytune::Application.routes.draw do
   get "sessions/login"
-  get "sessions/home"
   get "sessions/logout"
+  get "sessions/home"
   post "sessions/login_attempt"
 
   get "users/new"
