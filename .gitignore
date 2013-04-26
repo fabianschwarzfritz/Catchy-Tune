@@ -19,3 +19,6 @@
 
 # Ignore temporarily generated gemfile
 Gemfile.lock
+
+# Ignore public css files for heroku
+public/**
