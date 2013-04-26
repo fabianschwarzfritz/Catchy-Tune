@@ -1,4 +1,7 @@
 Catchytune::Application.routes.draw do
+  get "users/new"
+  post "users/create"
+
   resources :tracks
 
 
