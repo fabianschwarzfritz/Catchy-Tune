@@ -1,27 +1,25 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user
 
-  def login_required
-    if session[:user]
+  protected
+  def authenticate_user
+    unless session[:user_id]
+      redirect_to(:controller => 'sessions', :action => 'login')
+      return false
+    else
+# set current user object to @current_user object variable
+      @current_user = User.find session[:user_id]
       return true
     end
-    flash[:warning]='Please login to continue'
-    session[:return_to]=request.request_uri
-    redirect_to :controller => "user", :action => "login"
-    return false
   end
 
-  def current_user
-    session[:user]
-  end
-
-  def redirect_to_stored
-    if return_to = session[:return_to]
-      session[:return_to]=nil
-      redirect_to_url(return_to)
+  def save_login_state
+    if session[:user_id]
+      redirect_to(:controller => 'sessions', :action => 'home')
+      return false
     else
-      redirect_to :controller => 'user', :action => 'welcome'
+      return true
     end
   end
+
 end

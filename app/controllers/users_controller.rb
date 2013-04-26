@@ -2,7 +2,7 @@ require 'bcrypt'
 
 class UsersController < ApplicationController
 
-  before_filter :login_required, :only => ['welcome', 'change_password', 'hidden']
+  before_filter :save_login_state, :only => [:new, :create]
 
   def new
     @user = User.new
@@ -11,32 +11,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      session[:user] = User.authenticate(@user.email, @user.password)
-      flash[:message] = "You Signed up successfully"
-      redirect_to :action => 'welcome'
+      flash[:notice] = "You Signed up successfully"
+      flash[:color]= "valid"
     else
-      flash[:warning] = "Signup not successful"
+      flash[:notice] = "Form is invalid"
+      flash[:color]= "invalid"
     end
-  end
-
-  def login
-    if request.post?
-      if session[:user] = User.authenticate(params[:user][:login], params[:user][:password])
-        flash[:message] = "Login successful"
-        redirect_to_stored
-      else
-        flash[:warning] = "Login unsuccessful"
-      end
-    end
-  end
-
-  def logout
-    session[:user] = nil
-    flash[:message] = 'Logged out'
-    redirect_to :action => 'login'
-  end
-
-  def welcome
-
+    render "new"
   end
 end

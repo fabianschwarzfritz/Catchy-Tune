@@ -1,11 +1,19 @@
 Catchytune::Application.routes.draw do
+  get "sessions/login"
+  get "sessions/home"
+  get "sessions/logout"
+  post "sessions/login_attempt"
+
   get "users/new"
   post "users/create"
-  get "users/welcome"
+
+  root :to => "sessions#login"
+  match "signup", :to => "users#new"
+  match "login", :to => "sessions#login"
+  match "logout", :to => "sessions#logout"
+  match "home", :to => "sessions#home"
 
   resources :tracks
-
-
   resources :artists
 
 
