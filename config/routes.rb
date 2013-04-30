@@ -1,4 +1,6 @@
 Catchytune::Application.routes.draw do
+  get "playlist/stream"
+
   get "sessions/login"
   get "sessions/logout"
   get "sessions/home"
