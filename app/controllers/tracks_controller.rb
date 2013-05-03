@@ -3,6 +3,11 @@ class TracksController < ApplicationController
   before_filter :authenticate_user
   layout 'home'
 
+  def initialize
+    @fs = Mongo::GridFileSystem.new(MongoMapper.database)
+    @grid = Mongo::Grid.new(MongoMapper.database)
+  end
+
   # GET /tracks
   # GET /tracks.json
   def index
@@ -44,6 +49,10 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
+    id = params[:id]
+    file = IO.read(params[:upload][:file])
+    storesong(id)
+
     @track = Track.new(params[:track])
 
     respond_to do |format|
@@ -83,5 +92,10 @@ class TracksController < ApplicationController
       format.html { redirect_to tracks_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def storesong(id)
+    @fs.put(file, :filename => id)
   end
 end

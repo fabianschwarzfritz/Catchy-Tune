@@ -13,18 +13,10 @@ class PlaylistController < ApplicationController
     send_data getsong(id), :filename => "#{id}", :type => "audio/mpeg"
   end
 
-  def upload
-    id = params[:id]
-    file = IO.read(params[:upload][:file])
-    storesong(id)
-  end
+
 
   private
   def getsong(id)
     @grid.get(params[:file])
-  end
-
-  def storesong(id)
-    @fs.put(file, :filename => id)
   end
 end

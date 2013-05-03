@@ -1,6 +1,5 @@
 Catchytune::Application.routes.draw do
   get "playlist/stream"
-  post "playlist/upload"
 
   get "sessions/login"
   get "sessions/logout"
