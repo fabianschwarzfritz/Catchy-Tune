@@ -1,10 +1,11 @@
 require 'prawn'
+require 'mongo'
 
 class PlaylistController < ApplicationController
 
   def initialize
-    @grid = Grid.new(MongoMapper.database)
-    @fs = GridFileSystem.new(Mongomapper.database)
+    @fs = Mongo::GridFileSystem.new(MongoMapper.database)
+    @grid = Mongo::Grid.new(MongoMapper.database)
   end
 
   def stream
@@ -13,7 +14,7 @@ class PlaylistController < ApplicationController
   end
 
   def upload
-    songid = params[:id]
+    id = params[:id]
     file = IO.read(params[:upload][:file])
     storesong(id)
   end
@@ -24,6 +25,6 @@ class PlaylistController < ApplicationController
   end
 
   def storesong(id)
-    @fs.put(file, :filename => "songid")
+    @fs.put(file, :filename => id)
   end
 end

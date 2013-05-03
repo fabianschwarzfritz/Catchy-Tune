@@ -10,6 +10,7 @@ gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'faker'
 gem 'bcrypt-ruby'
+gem 'prawn'
 
 # use sqlite locally and pg on heroku
 group :development, :test do

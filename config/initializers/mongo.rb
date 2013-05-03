@@ -1,1 +1,2 @@
-MongoMapper.database = Rails.env == "production" ? "catchytune" : "catchytune-#{Rails.env}"
+railsenv =  Rails.env == "production" ? "catchytune" : "catchytune-#{Rails.env}"
+MongoMapper.database = railsenv
