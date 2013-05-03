@@ -12,6 +12,7 @@
 
 # Ignore RubyMine files
 /.idea/*
+atlassian-ide-plugin.xml
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
