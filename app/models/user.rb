@@ -33,8 +33,12 @@ class User
     self.password = nil
   end
 
-  def self.authenticate(username_or_email="", login_password="")
-    user = User.find_by_email(username_or_email)
+  def match_password(login_password="")
+    hashed_password == BCrypt::Engine.hash_secret(login_password, salt)
+  end
+
+  def self.authenticate(username="", login_password="")
+    user = User.find_by_username(username)
 
     if user && user.match_password(login_password)
       return user
@@ -43,7 +47,7 @@ class User
     end
   end
 
-  def match_password(login_password="")
-    hashed_password == BCrypt::Engine.hash_secret(login_password, salt)
+  def self.find_by_username(username)
+    User.first(:username => username)
   end
 end
