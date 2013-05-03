@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home of <%= @current_user.email %></title>
+  <title>Home of <%= @current_user.username %></title>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -32,7 +32,7 @@
       </div>
 
       <ul class="nav pull-right">
-        <li><p class="navbar-text pull-right">Logged in as <%= @current_user.email %></p></li>
+        <li><p class="navbar-text pull-right">Logged in as <%= @current_user.username %></p></li>
         <li><%= link_to "logout", :controller => "sessions", :action => 'logout' %></li>
       </ul>
     </div>
