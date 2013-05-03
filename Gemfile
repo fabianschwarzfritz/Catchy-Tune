@@ -12,17 +12,12 @@ gem 'faker'
 gem 'bcrypt-ruby'
 gem 'prawn'
 
-# use sqlite locally and pg on heroku
-group :development, :test do
-  gem 'sqlite3'
-  gem "rspec-rails", ">= 2.0.1"
-  gem 'cucumber-rails'
+# Gems used for BDD
+group :test do
+  gem 'rspec-rails', '>= 2.0.1'
+  gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
 end
-group :production do
-  gem 'pg'
-end
-
 
 # Gems used only for assets and not required
 # in production environments by default.
