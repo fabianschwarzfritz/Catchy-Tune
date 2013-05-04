@@ -10,13 +10,17 @@ class PlaylistController < ApplicationController
 
   def stream
     id = params[:songid]
-    send_data getsong(id), :filename => "#{id}", :type => "audio/mpeg"
+    begin
+      song = getsong(id)
+      send_data song.read, :filename => "#{id}", :type => "audio/mpeg"
+    rescue Mongo::GridFileNotFound
+      puts "Could not find song with id #{id} in database!"
+    end
   end
-
 
 
   private
   def getsong(id)
-    @grid.get(params[:file])
+    @grid.get(BSON::ObjectId(id))
   end
 end
