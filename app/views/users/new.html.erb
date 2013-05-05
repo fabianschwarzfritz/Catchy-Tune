@@ -1,22 +1,51 @@
 <% @page_title = "UserAuth | Signup" %>
-<div class= "Sign_Form">
-  <h1>Sign Up</h1>
-  <%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="span7">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque debitis deleniti,
+        dolor dolore est eum hic illo, iusto labore laborum, praesentium quaerat quisquam rerum
+        unde voluptas voluptatem voluptatibus. Quisquam, saepe?
+      </p>
+    </div>
+    <div class="span5">
+      <%= form_for(:user, :url => {:controller => 'users', :action => 'create'}, :html => {:class => 'form-signin form-horizontal'}) do |f| %>
+          <h2 class="form-signin-heading">Sign up</h2>
 
-      <p> Username:</br> <%= f.text_field :username%> </p>
+          <div class="control-group">
+            <label class="control-label" for="inputUser">Username:</label>
 
-      <p> Password:</br> <%= f.password_field :password%></p>
+            <div class="controls">
+              <%= f.text_field :username, :id => 'inputUser', :class => 'input-medium', :placeholder => 'User' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">Password:</label>
 
-      <p> Password Confirmation:</br> <%= f.password_field :password_confirmation%> </p>
+            <div class="controls">
+              <%= f.password_field :password, :id => 'inputPassword', :class => 'input-medium', :placeholder => 'Password' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPasswordConfirmation">Confirm password:</label>
 
-      <%= f.submit :Signup %>
-  <% end %>
+            <div class="controls">
+              <%= f.password_field :password_confirmation, :id => 'inputPasswordConfirmation', :class => 'input-medium', :placeholder => 'Password' %>
+            </div>
+          </div>
 
-  <% if @user.errors.any? %>
-      <ul class="Signup_Errors">
-        <% for message_error in @user.errors.full_messages %>
-            <li>* <%= message_error %></li>
-        <% end %>
-      </ul>
-  <% end %>
+          <div class="control-group">
+            <%= f.submit :Signup, :class => 'btn btn-large btn-primary' %>
+          </div>
+      <% end %>
+
+      <% if @user.errors.any? %>
+          <ul class="Signup_Errors">
+            <% for message_error in @user.errors.full_messages %>
+                <li><%= message_error %></li>
+            <% end %>
+          </ul>
+      <% end %>
+    </div>
+  </div>
 </div>
