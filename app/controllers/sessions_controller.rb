@@ -3,6 +3,18 @@ class SessionsController < ApplicationController
   before_filter :authenticate_user, :only => [:home]
   before_filter :save_login_state, :only => [:login, :login_attempt]
 
+  layout :get_layout
+
+  def get_layout
+    case action_name
+      when 'home'
+        'home'
+      else
+        'application'
+    end
+  end
+
+
   def login
 #Login Form
   end
