@@ -13,7 +13,8 @@ class SessionsController < ApplicationController
   end
 
   def login_attempt
-    authorized_user = User.authenticate(params[:username], params[:login_password])
+    authorized_user = User.authenticate(params[:login][:username], params[:login][:password])
+
     if authorized_user
       session[:user_id] = authorized_user.id
       redirect_to(:action => 'home')

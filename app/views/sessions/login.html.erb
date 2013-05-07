@@ -1,9 +1,36 @@
 <% @page_title = "UserAuth | Login" -%>
-<div class= "Sign_Form">
-  <h1>Log in</h1>
-  <%= form_tag(:action => 'login_attempt') do %>
-      <p>Username:</br> <%= text_field_tag(:username) %></p>
-      <p>Password:</br> <%= password_field_tag :login_password %></p>
-      <%= submit_tag("Log In") %>
-  <% end %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="span7">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque debitis deleniti,
+        dolor dolore est eum hic illo, iusto labore laborum, praesentium quaerat quisquam rerum
+        unde voluptas voluptatem voluptatibus. Quisquam, saepe?
+      </p>
+    </div>
+    <div class="span5">
+      <%= form_for(:login, :url => {:controller => 'sessions', :action => 'login_attempt'}, :html => {:class => 'form-signin form-horizontal'}) do |f| %>
+          <h2 class="form-signin-heading">Log in</h2>
+
+          <div class="control-group">
+            <%= label :login, :username, 'Username:', :class=>'control-label' %>
+
+            <div class="controls">
+              <%= f.text_field :username, :class => 'input-medium', :placeholder => 'User' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= label :login, :password, 'Password:', :class=>'control-label' %>
+
+            <div class="controls">
+              <%= f.password_field :password, :class => 'input-medium', :placeholder => 'Password' %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <%= f.submit value='Log in', :class => 'btn btn-large btn-primary' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
 </div>
