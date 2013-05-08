@@ -2,10 +2,13 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-      when /the home\s?page/
-        '/'
-      when /the search\s?page/
-        "/search"
+      when /the sign\s?up\s?page/i
+        '/users/new'
+      when /the log\s?in\s?page/i
+        '/sessions/login'
+      when /the home\s?page/i
+        '/sessions/home'
+
       else
         begin
           page_name =~ /the (.*) page/
