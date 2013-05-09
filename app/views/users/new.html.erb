@@ -9,7 +9,7 @@
       </p>
     </div>
     <div class="span6">
-      <%= form_for(:user, :url => {:controller => 'users', :action => 'create'}, :html => {:class => 'form-signin form-horizontal'}) do |f| %>
+      <%= form_for(:user, :url => {:controller => 'users', :action => 'new'}, :html => {:class => 'form-signin form-horizontal'}) do |f| %>
         <div class="control-group">
           <%= label :user, :username, 'Username:', :class => 'control-label' %>
 

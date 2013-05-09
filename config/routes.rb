@@ -7,7 +7,7 @@ Catchytune::Application.routes.draw do
   post "sessions/login_attempt"
 
   get "users/new"
-  post "users/create"
+  post "users/new"
 
   root :to => "sessions#login"
   match "signup", :to => "users#new"
