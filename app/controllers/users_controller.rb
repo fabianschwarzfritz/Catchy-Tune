@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :save_login_state, :only => [:new, :create]
 
   def new
-    if params[:user].nil?
+    if not params.has_key? :user
       @user = User.new
     else
       @user = User.new(params[:user])
