@@ -11,6 +11,10 @@
  *= require_self
  *= require_tree .
  */
+html {
+    padding-top: 65px;
+}
+
 html, body {
     height: 100%;
 }
