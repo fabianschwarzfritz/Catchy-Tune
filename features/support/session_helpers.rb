@@ -19,6 +19,21 @@ module SessionHelpers
   def log_out
     visit '/sessions/logout'
   end
+
+  def logged_in?
+    visit path_to 'the home page'
+    current_path == path_to('the home page')
+  end
+
+  def logged_in_user
+    if logged_in?
+      visit path_to 'the home page'
+
+      /^Home of (.+)$/.match(title)[1]
+    else
+      nil
+    end
+  end
 end
 
 World(SessionHelpers)

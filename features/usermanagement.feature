@@ -27,25 +27,16 @@ Feature: User management
 
 
   Scenario: Log in successfully
-    Given I am on the login page
-    And I fill in "login_username" with "existinguser"
-    And I fill in "login_password" with "password"
-    When I press "Log in"
+    When I log in with user "existinguser" and password "password"
     Then I should be on the home page
-    And I should be logged in as "fabian"
+    And I should be logged in as "existinguser"
 
-  Scenario: Try to log in with a wrong password
-    Given I am on the login page
-    And I fill in "login_username" with "existinguser"
-    And I fill in "login_password" with "passwordspelledwrong"
-    When I press "Log in"
+  Scenario Outline: Try to log in with wrong data
+    When I log in with user "<username>" and password "<password>"
     Then I should be on the login page
+    And I should see an error message
     And I should not be logged in
 
-  Scenario: Try to log in with a not-existent user
-    Given I am on the login page
-    And I fill in "login_username" with "not-existent user"
-    And I fill in "login_password" with "password"
-    When I press "Log in"
-    Then I should be on the login page
-    And I should not be logged in
+    Examples: | username      | password              | description     |
+              | existinguser  | passwordspelledwrong  | wrong password  |
+              | unknownuser   | password              | wrong username  |
