@@ -14,7 +14,7 @@ class MongoTest < ActiveSupport::TestCase
 
   test "save a user to the database" do
     user = User.new
-    user.email = "fabian@schwarz-fritz.de"
+    user[:username => "fabian@schwarz-fritz.de"]
     user.save
   end
 end

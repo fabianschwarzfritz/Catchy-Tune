@@ -1,58 +1,42 @@
 Feature: User management
-  In order to register and log in to the application
+  In order to be allowed to use the application
+  As a potential user
+  I want to register and log in
 
-  Scenario: Register successfully
-    Given I am on the login page
-    And I fill in "username" with "fabian@schwarz-fritz.de"
-    And I fill in "password" with "password"
-    And I fill in "passwordconfirmation" with "password"
-    When I press "Register"
+
+  Background:
+    Given a user "existinguser" with password "password"
+    And I am logged out
+
+
+
+  Scenario: Sign up successfully
+    When I sign up with user "fabian" and password "password"
     Then I should be on the home page
     And I should be logged in
-    And I should be registered
 
-  Scenario: Password spelled wrong
-    Given I am on the login page
-    And I fill in "username" with "fabian@schwarz-fritz.de"
-    And I fill in "password" with "password"
-    And I fill in "passwordconfirmation" with "passwordspelledwrong"
-    When I press "Register"
-    Then I should be on the login page
+  Scenario Outline: Try to sign up with wrong data
+    When I sign up with user "<username>" and password "<password>" and password confirmation "<password confirmation>"
+    Then I should be on the sign up page
+    And I should see an error message
     And I should not be logged in
-    And I should not be registered
 
-  Scenario: User already exists
-    Given I am on the login page
-    And a user "existinguser" exists
-    And I fill in "username" with "existinguser"
-    And I fill in "password" with "password"
-    And I fill in "passwordconfirmation" with "password"
-    When I press "Register"
-    Then I should see an error message
-    And I should not be logged in
+    Examples: | username      | password  | password confirmation | description         |
+              | fabian        | password  | passwordspelledwrong  | wrong confirmation  |
+              | existinguser  | password  | password              | existing user       |
 
 
   Scenario: Log in successfully
-    Given I am on the login page
-    And I fill in "username" with "fabian@schwarz-fritz.de"
-    And I fill in "password" with "password"
-    When I press "Login"
+    When I log in with user "existinguser" and password "password"
     Then I should be on the home page
-    And I should be logged in as "fabian@schwarz-fritz.de"
+    And I should be logged in as "existinguser"
 
-  Scenario: Log in with a wrong password
-    Given I am on the login page
-    And I fill in "username" with "fabian@schwarz-fritz.de"
-    And I fill in "password" with "awrongpassword"
-    When I press "Login"
+  Scenario Outline: Try to log in with wrong data
+    When I log in with user "<username>" and password "<password>"
     Then I should be on the login page
+    And I should see an error message
     And I should not be logged in
 
-  Scenario: Log in with a not-existent user
-    Given I am on the login page
-    And a user "not-existent user" does not exist
-    And I fill in "username" with "not-existent user"
-    And I fill in "password" with "password"
-    When I press "Login"
-    Then I should be on the login page
-    And I should not be logged in
+    Examples: | username      | password              | description     |
+              | existinguser  | passwordspelledwrong  | wrong password  |
+              | unknownuser   | password              | wrong username  |
