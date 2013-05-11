@@ -12,6 +12,9 @@ function initHandler() {
     $("#play").click(function () {
         actionPlayPause();
     });
+    #("#next").click(function() {
+        actionNextSong();
+    });
 }
 
 // Returns the player audio element
@@ -26,6 +29,11 @@ function actionPlayPause() {
         initAudioEventListeners();
     }
     togglePlayPause();
+}
+
+// Action triggeren when next song is pressed
+function actionNextSong() {
+
 }
 
 // Toggle between play and pause
