@@ -22,7 +22,7 @@ function getPlayer() {
 // Action triggered when play/pause is pressed
 function actionPlayPause() {
     if (getPlayer().getAttribute("src") == "") {
-        fetchNextSong();
+        fetchCurrentSongInformation();
         initAudioEventListeners();
     }
     togglePlayPause();
@@ -37,8 +37,18 @@ function togglePlayPause() {
     }
 }
 
-// Fetch next song and prepare audio element for playing
-function fetchNextSong() {
+// Fetch song information of current song
+function fetchCurrentSongInformation() {
+
+}
+
+// Fetch stream file of current song
+function fetchCurrentSongFile() {
+
+}
+
+// Skip current song and set to next song to current song
+function nextSong() {
 
 }
 
