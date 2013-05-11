@@ -8,6 +8,9 @@ Catchytune::Application.routes.draw do
   post 'users/new'
 
   get 'playlist/stream'
+  post 'playlist/add'
+  get 'playlist/current_song'
+  get 'playlist/next'
 
   root :to => "sessions#login"
   match "signup", :to => "users#new"
