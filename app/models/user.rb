@@ -20,7 +20,6 @@ class User
             :presence => true,
             :length => {:minimum => 5, :maximum => 40},
             :confirmation => true
-  validates_confirmation_of :password
 
   def encrypt_password
     if password.present?

@@ -34,13 +34,7 @@
 
         <div class="control-group">
           <div class="controls">
-            <% if @user.errors.any? %>
-              <ul class="Signup_Errors">
-                <% @user.errors.full_messages.each do |_error_message| %>
-                  <li class="text-error"><%= _error_message %></li>
-                <% end %>
-              </ul>
-            <% end %>
+            <%= error_messages @user %>
 
             <%= f.submit value='Sign up', :class => 'btn btn-large btn-primary' %>
           </div>
