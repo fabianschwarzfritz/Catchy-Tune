@@ -32,6 +32,12 @@
             <%= f.submit value='Log in', :class => 'btn btn-large btn-primary' %>
           </div>
         </div>
+
+        <div class="control-group">
+          <div class="controls">
+            <%= link_to 'You are not a member yet? Sign up!', :controller => 'users', :action => 'new' %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
