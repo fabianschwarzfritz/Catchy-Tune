@@ -34,15 +34,15 @@
 
         <div class="control-group">
           <div class="controls">
-            <% if @user.errors.any? %>
-              <ul class="Signup_Errors">
-                <% for message_error in @user.errors.full_messages %>
-                  <li class="text-error"><%= message_error %></li>
-                <% end %>
-              </ul>
-            <% end %>
+            <%= error_messages @user %>
 
             <%= f.submit value='Sign up', :class => 'btn btn-large btn-primary' %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="controls">
+            <%= link_to 'You have already registered? Log in!', :controller => 'sessions', :action => 'login' %>
           </div>
         </div>
       <% end %>
