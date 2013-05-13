@@ -1,2 +1,2 @@
 echo "===Executing cucumber tests"
-bundle exec cucumber
+bundle exec cucumber --format html --out cucumber-report.html
