@@ -5,16 +5,6 @@ class SessionsController < ApplicationController
 
   layout :get_layout
 
-  def get_layout
-    case action_name
-      when 'home'
-        'home'
-      else
-        'application'
-    end
-  end
-
-
   def login
     if params.has_key? :login
       authorized_user = User.authenticate(params[:login][:username], params[:login][:password])
@@ -27,13 +17,21 @@ class SessionsController < ApplicationController
         flash[:color]= 'invalid'
         render 'login'
       end
-
-    #else Login Form
     end
   end
 
   def logout
     session[:user_id] = nil
     redirect_to :action => 'login'
+  end
+
+  private
+  def get_layout
+    case action_name
+      when 'home'
+        'home'
+      else
+        'application'
+    end
   end
 end
