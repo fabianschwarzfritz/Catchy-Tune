@@ -11,21 +11,21 @@
     <div class="span6">
       <%= form_for(:user, :url => {:controller => 'users', :action => 'new'}, :html => {:class => 'form-signin form-horizontal'}) do |f| %>
         <div class="control-group">
-          <%= label :user, :username, 'Username:', :class => 'control-label' %>
+          <%= label :user, :username, 'Username', :class => 'control-label' %>
 
           <div class="controls">
-            <%= f.text_field :username, :placeholder => 'User' %>
+            <%= f.text_field :username, :placeholder => 'Username' %>
           </div>
         </div>
         <div class="control-group">
-          <%= label :user, :password, 'Password:', :class => 'control-label' %>
+          <%= label :user, :password, 'Password', :class => 'control-label' %>
 
           <div class="controls">
             <%= f.password_field :password, :placeholder => 'Password' %>
           </div>
         </div>
         <div class="control-group">
-          <%= label :user, :password_confirmation, 'Confirm password:', :class => 'control-label' %>
+          <%= label :user, :password_confirmation, 'Confirm password', :class => 'control-label' %>
 
           <div class="controls">
             <%= f.password_field :password_confirmation, :placeholder => 'Password' %>
