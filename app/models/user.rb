@@ -49,4 +49,7 @@ class User
   def self.find_by_username(username)
     User.first(:username => username)
   end
+
+
+  self.ensure_index([[:username, Mongo::ASCENDING]])
 end

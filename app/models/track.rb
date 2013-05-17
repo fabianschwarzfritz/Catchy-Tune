@@ -5,4 +5,8 @@ class Track
   key :name, String
 
   belongs_to :artist
+
+
+  self.ensure_index(([[ :artist_id, Mongo::ASCENDING]]))
+  self.ensure_index(([[ :name,      Mongo::DESCENDING]]))
 end
