@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Catchytune</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag *@css_sources, :media => 'all' %>
+  <%= javascript_include_tag *@js_sources %>
   <%= csrf_meta_tags %>
 </head>
 <body>
