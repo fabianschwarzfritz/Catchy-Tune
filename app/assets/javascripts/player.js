@@ -25,7 +25,8 @@ function initHandler() {
 
 // Initialize audio player event listeners
 function initAudioEventListeners() {
-
+    getPlayer().addEventListener("timeupdate", actionTimeUpdate, true);
+    getPlayer().addEventListener("ended", actionSongEnded, true);
 }
 
 // Returns the player audio element
@@ -60,6 +61,26 @@ function actionVolumeDown() {
     var volume = getPlayer().volume;
     volume -= 0.1;
     getPlayer().volume = volume;
+}
+
+function actionTimeUpdate() {
+    var current = getPlayer().currentTime;
+    var fullTime = getPlayer().duration;
+    var onePercent = fullTime / 100;
+    var currentPercentage = current / onePercent;
+    $("#playprogressbar").(currentPercentage);
+}
+
+function actionSongEnded() {
+    getPlayer().pause();
+    $("#play").html('play');
+    nextSong();
+    if (currentSongId() != null) {
+        fetchCurrentSongFile();
+        fetchCurrentSongInformation()
+        initAudioEventListeners();
+        getPlayer().play();
+    }
 }
 
 // Toggle between play and pause
