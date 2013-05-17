@@ -68,7 +68,7 @@ function actionTimeUpdate() {
     var fullTime = getPlayer().duration;
     var onePercent = fullTime / 100;
     var currentPercentage = current / onePercent;
-    $("#playprogressbar").(currentPercentage);
+    $("#playprogressbar").width(currentPercentage);
 }
 
 function actionSongEnded() {
@@ -95,8 +95,8 @@ function togglePlayPause() {
 // Fetch song information of current song
 function fetchCurrentSongInformation() {
     var current_song_id = currentSongId();
-    $.get("/artists/show/" + current_song_id, function (data) {
-        alert("data /artists/show/id" + data);
+    $.get("/tracks/show/" + current_song_id, function (data) {
+        alert("data /tracks/show/id" + data);
     });
 }
 
