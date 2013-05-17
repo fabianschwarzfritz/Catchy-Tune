@@ -42,3 +42,10 @@ Feature: User management
       | username      | password              | description         |
       | existinguser  | passwordspelledwrong  | wrong password      |
       | unknownuser   | password              | wrong username      |
+
+
+  Scenario: Try to get in without logging in
+    Given I am logged out
+    When I visit the home page
+    Then I should be on the login page
+
