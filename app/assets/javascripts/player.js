@@ -50,12 +50,16 @@ function actionNextSong() {
 
 // Action triggered when volume up is pressed
 function actionVolumeUp() {
-
+    var volume = getPlayer().volume;
+    volume += 0.1;
+    getPlayer().volume = volume;
 }
 
 // Action triggered when volume down is pressed
 function actionVolumeDown() {
-
+    var volume = getPlayer().volume;
+    volume -= 0.1;
+    getPlayer().volume = volume;
 }
 
 // Toggle between play and pause
