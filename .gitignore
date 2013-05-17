@@ -17,10 +17,13 @@ atlassian-ide-plugin.xml
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+.sass-cache/
 
 # Ignore temporarily generated gemfile
 Gemfile.lock
 
-# Ignore public css files for heroku
+# Ignore precompiled asset files for heroku
 public/**
+
+#ignore cucumber test report (naming convention)
 cucumber-report.html
