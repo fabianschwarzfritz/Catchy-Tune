@@ -15,6 +15,12 @@ function initHandler() {
     $("#next").click(function () {
         actionNextSong();
     });
+    $("#volumeup").click(function () {
+        actionVolumeUp();
+    });
+    $("#volumedown").click(function () {
+        actionVolumeDown();
+    });
 }
 
 // Initialize audio player event listeners
@@ -37,9 +43,19 @@ function actionPlayPause() {
     togglePlayPause();
 }
 
-// Action triggeren when next song is pressed
+// Action triggered when next song is pressed
 function actionNextSong() {
     nextSong();
+}
+
+// Action triggered when volume up is pressed
+function actionVolumeUp() {
+
+}
+
+// Action triggered when volume down is pressed
+function actionVolumeDown() {
+
 }
 
 // Toggle between play and pause
@@ -73,7 +89,7 @@ function currentSongId() {
         type: 'get',
         dataType: 'text',
         async: false,
-        success: function(data) {
+        success: function (data) {
             result = data;
         }
     });
