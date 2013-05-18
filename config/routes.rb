@@ -8,6 +8,7 @@ Catchytune::Application.routes.draw do
   post 'users/new'
 
   get 'search/results'
+  post 'search/results'
 
   get 'playlist/stream'
   post 'playlist/add'

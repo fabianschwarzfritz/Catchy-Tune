@@ -22,6 +22,13 @@
         </ul>
       </div>
 
+      <%= form_for(:search, :url => {:controller => 'search', :action => 'results'}, :html => {:class => 'navbar-search form-search pull-left'}) do |f| %>
+          <div class="input-append">
+            <%= f.text_field :query, :class => 'input-xlarge search-query', :placeholder => 'Search' %>
+            <button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+          </div>
+      <% end %>
+
       <ul class="nav pull-right">
         <li><p class="navbar-text pull-right">Logged in as <%= @current_user.username %></p></li>
         <li><%= link_to "logout", :controller => "sessions", :action => 'logout' %></li>
