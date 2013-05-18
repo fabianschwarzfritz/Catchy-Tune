@@ -10,6 +10,8 @@ module SessionHelpers
   end
 
   def log_in_with(username, password)
+    log_out if logged_in?
+
     visit path_to 'the login page'
     fill_in 'login_username', :with => username
     fill_in 'login_password', :with => password

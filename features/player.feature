@@ -1,20 +1,23 @@
 Feature: Audio player
-  In order to play a song and listen to the streamed music
+  In order to relax
+  As a user
+  I want to listen to music
 
-  Scenario: Adding a song to the playlist
-    Given I am logged in
-    And I have no songs in my playlist
+  Background:
+    Given a user "existinguser" with password "password"
+    And I am logged in with user "existinguser" and password "password"
+
+  Scenario: Add a song to the playlist
+    Given I have no songs in my playlist
     When I add a song to the playlist
     Then I should have a song in my playlist
 
   Scenario: Appending a song to the playlist
-    Given I am logged in
-    And I have songs in my playlist
+    Given I have a song in my playlist
     When I add a song to the playlist
-    Then the new song should be listed at the bottom
+    Then the new song should be played as the last song
 
   Scenario: Playing a song
-    Given I am logged in
-    And I have a song in my playlist
-    When I press play
-    Then the song should be played
+    Given I have a song in my playlist
+    When I press "play"
+    Then a song should be played
