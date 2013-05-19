@@ -1,19 +1,9 @@
 class SessionsController < ApplicationController
 
   before_filter :authenticate_user, :only => [:home]
-  before_filter :save_login_state, :only => [:login, :login_attempt]
+  before_filter :save_login_state, :only => [:login]
 
   layout :get_layout
-
-  def get_layout
-    case action_name
-      when 'home'
-        'home'
-      else
-        'application'
-    end
-  end
-
 
   def login
     if params.has_key? :login
@@ -27,13 +17,21 @@ class SessionsController < ApplicationController
         flash[:color]= 'invalid'
         render 'login'
       end
-
-    #else Login Form
     end
   end
 
   def logout
     session[:user_id] = nil
     redirect_to :action => 'login'
+  end
+
+  private
+  def get_layout
+    case action_name
+      when 'home'
+        'home'
+      else
+        'application'
+    end
   end
 end

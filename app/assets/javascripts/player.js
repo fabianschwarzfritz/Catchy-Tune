@@ -1,6 +1,8 @@
 //# Place all the behaviors and hooks related to the matching controller here.
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+//
+//= require application
 
 // Initalize handlers when document is completely loaded
 $(document).ready(function () {
@@ -15,11 +17,18 @@ function initHandler() {
     $("#next").click(function () {
         actionNextSong();
     });
+    $("#volumeup").click(function () {
+        actionVolumeUp();
+    });
+    $("#volumedown").click(function () {
+        actionVolumeDown();
+    });
 }
 
 // Initialize audio player event listeners
 function initAudioEventListeners() {
-
+    getPlayer().addEventListener("timeupdate", actionTimeUpdate, true);
+    getPlayer().addEventListener("ended", actionSongEnded, true);
 }
 
 // Returns the player audio element
@@ -37,9 +46,43 @@ function actionPlayPause() {
     togglePlayPause();
 }
 
-// Action triggeren when next song is pressed
+// Action triggered when next song is pressed
 function actionNextSong() {
     nextSong();
+}
+
+// Action triggered when volume up is pressed
+function actionVolumeUp() {
+    var volume = getPlayer().volume;
+    volume += 0.1;
+    getPlayer().volume = volume;
+}
+
+// Action triggered when volume down is pressed
+function actionVolumeDown() {
+    var volume = getPlayer().volume;
+    volume -= 0.1;
+    getPlayer().volume = volume;
+}
+
+function actionTimeUpdate() {
+    var current = getPlayer().currentTime;
+    var fullTime = getPlayer().duration;
+    var onePercent = fullTime / 100;
+    var currentPercentage = current / onePercent;
+    $("#playprogressbar").width(currentPercentage);
+}
+
+function actionSongEnded() {
+    getPlayer().pause();
+    $("#play").html('play');
+    nextSong();
+    if (currentSongId() != null) {
+        fetchCurrentSongFile();
+        fetchCurrentSongInformation()
+        initAudioEventListeners();
+        getPlayer().play();
+    }
 }
 
 // Toggle between play and pause
@@ -54,8 +97,8 @@ function togglePlayPause() {
 // Fetch song information of current song
 function fetchCurrentSongInformation() {
     var current_song_id = currentSongId();
-    $.get("/artists/show/" + current_song_id, function (data) {
-        alert("data /artists/show/id" + data);
+    $.get("/tracks/show/" + current_song_id, function (data) {
+        alert("data /tracks/show/id" + data);
     });
 }
 
@@ -73,7 +116,7 @@ function currentSongId() {
         type: 'get',
         dataType: 'text',
         async: false,
-        success: function(data) {
+        success: function (data) {
             result = data;
         }
     });

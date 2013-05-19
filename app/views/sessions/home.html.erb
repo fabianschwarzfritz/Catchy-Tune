@@ -1,4 +1,6 @@
+<% @css_sources = %w(home player)
+   @js_sources = 'player' -%>
+
 <h1>Sessions#home</h1>
 <p>Find me in app/views/sessions/home.html.erb</p>
 <h2 class='User_Header'> <%=@current_user.username%> Profile </h2>
-<%= link_to "logout", :controller => "sessions", :action => 'logout' %>

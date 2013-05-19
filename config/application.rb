@@ -61,6 +61,9 @@ module Catchytune
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Fix mongodb connection while precompiling
+    config.assets.initialize_on_precompile = false
+
     # Mongodb configuration
     config.generators do |gen|
       gen.orm :mongo_mapper

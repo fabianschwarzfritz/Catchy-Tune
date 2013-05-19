@@ -21,21 +21,13 @@ class PlaylistController < ApplicationController
   end
 
   def add
-    puts "current playlist: " << session[:playlist].inspect
     id = params[:songid]
-    playlist = session[:playlist]
-    playlist << id
-    session[:playlist] = playlist
-    puts "current playlist: " << session[:playlist].inspect
+    session[:playlist] << id if id != nil
     render :nothing => true
   end
 
   def current_song
-    puts "current playlist: " << session[:playlist].inspect
-    @current_song_id = session[:playlist][0]
-    puts "current song: " << @current_song_id
-    puts "current playlist: " << session[:playlist].inspect
-    puts @current_song_id
+    @current_song_id = get_current_song_id()
     respond_to do |format|
       format.text { render :text => @current_song_id }
     end
@@ -43,7 +35,7 @@ class PlaylistController < ApplicationController
 
   def next
     session[:playlist].shift()
-    puts "current playlist: " << session[:playlist].inspect
+    puts session[:playlist].inspect
     render :nothing => true
   end
 
@@ -53,12 +45,10 @@ class PlaylistController < ApplicationController
   end
 
   def prepare_session
-    puts "before playlist: " << session[:playlist].inspect
-    playlist = session[:playlist]
-    if playlist.nil?
-      playlist ||= Array.new
-    end
-    session[:playlist] = playlist
-    puts "after playlist: " << session[:playlist].inspect
+    session[:playlist] ||= Array.new
+  end
+
+  def get_current_song_id()
+    return session[:playlist].first
   end
 end

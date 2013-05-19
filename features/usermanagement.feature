@@ -21,9 +21,10 @@ Feature: User management
     And I should see an error message
     And I should not be logged in
 
-    Examples: | username      | password  | password confirmation | description         |
-              | fabian        | password  | passwordspelledwrong  | wrong confirmation  |
-              | existinguser  | password  | password              | existing user       |
+    Examples:
+      | username      | password        | password confirmation | description         |
+      | fabian        | password        | passwordspelledwrong  | wrong confirmation  |
+      | existinguser  | password        | password              | existing user       |
 
 
   Scenario: Log in successfully
@@ -37,6 +38,14 @@ Feature: User management
     And I should see an error message
     And I should not be logged in
 
-    Examples: | username      | password              | description     |
-              | existinguser  | passwordspelledwrong  | wrong password  |
-              | unknownuser   | password              | wrong username  |
+    Examples:
+      | username      | password              | description         |
+      | existinguser  | passwordspelledwrong  | wrong password      |
+      | unknownuser   | password              | wrong username      |
+
+
+  Scenario: Try to get in without logging in
+    Given I am logged out
+    When I visit the home page
+    Then I should be on the login page
+
