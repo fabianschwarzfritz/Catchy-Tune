@@ -52,5 +52,5 @@ class User
   end
 
 
-  self.ensure_index(:username => Mongo::ASCENDING)
+  self.ensure_index({:username => Mongo::ASCENDING}, :unique => true)
 end
