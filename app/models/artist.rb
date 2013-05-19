@@ -6,4 +6,7 @@ class Artist
 
   many :tracks
   belongs_to :user
+
+
+  self.ensure_index(:name => Mongo::ASCENDING)
 end

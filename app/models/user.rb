@@ -50,4 +50,7 @@ class User
   def clear_password
     self.password = nil
   end
+
+
+  self.ensure_index(:username => Mongo::ASCENDING)
 end
