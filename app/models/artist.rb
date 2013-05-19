@@ -6,4 +6,6 @@ class Artist
 
   many :tracks
   belongs_to :user
+
+  scope :by_name_contains, lambda { |name| where(:name => (/#{name}/i)) }
 end

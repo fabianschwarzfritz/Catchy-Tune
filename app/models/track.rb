@@ -5,4 +5,6 @@ class Track
   key :name, String
 
   belongs_to :artist
+
+  scope :by_name_contains, lambda { |name| where(:name => (/#{name}/i)) }
 end
