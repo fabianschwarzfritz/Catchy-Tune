@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home of <%= @current_user.username %></title>
+  <title><%= @page_title.blank? ? "Home of #{@current_user.username}" : @page_title %></title>
   <%= stylesheet_link_tag *@css_sources, :media => 'all' %>
   <%= javascript_include_tag *@js_sources %>
   <%= csrf_meta_tags %>

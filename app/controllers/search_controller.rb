@@ -16,8 +16,13 @@ class SearchController < ApplicationController
     if params[:search]
       @query = params[:search][:query]
 
-      @artists_count = Artist.by_name_contains(@query).count
-      @tracks_count = Track.by_name_contains(@query).count
+      artists = Artist.by_name_contains(@query)
+      tracks = Track.by_name_contains(@query)
+
+      @artists_count = artists.count
+      @tracks_count = tracks.count
+
+      @results = artists.to_a + tracks.to_a
 
       #else render page with defaults or error message
     end
