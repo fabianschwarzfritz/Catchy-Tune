@@ -6,6 +6,10 @@ class SearchController < ApplicationController
   def initialize
     @query = '<<no query>>'
     @artists_count = @tracks_count = 0
+
+    # Invoke initialize in superclass, so rails can do its initialization.
+    # Otherwise, essential functionality (such as layouts) would not work.
+    super
   end
 
   def results
