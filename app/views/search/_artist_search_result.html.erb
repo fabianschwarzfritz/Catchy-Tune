@@ -2,8 +2,8 @@
   <p><%= result.name %></p>
 </div>
 <div class="span1">
-  <%= button_to 'Add', root_path, :class => 'btn btn-inverse' %>
+  <%= button_to 'Add', root_path, :method => :get, :class => 'btn btn-inverse' %>
 </div>
 <div class="span1">
-  <%= button_to 'Show', artist_path(:id => result.id), :class => 'btn btn-primary' %>
+  <%= button_to 'Show', artist_path(:id => result.id), :method => :get, :class => 'btn btn-primary' %>
 </div>
