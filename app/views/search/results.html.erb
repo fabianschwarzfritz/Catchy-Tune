@@ -8,17 +8,9 @@
 <div class="container">
   <% @results.each do |result| %>
       <div class="row">
-        <div class="container">
-          <% case result %>
-          <% when Track %>
-              <div class="span5"><p><%= result.name %></p></div>
-              <div class="span5"><p><%= Artist.find_by_id(result.artist_id).name %></p></div>
-          <% when Artist%>
-              <p><%= result.name %></p>
-          <% else %>
-              <p class="text-error"><%= result.class %></p>
-          <% end %>
-        </div>
+        <%= partial_name = result.class.to_s.downcase + '_search_result'
+          render :partial => "#{partial_name}", :locals => {:result => result} rescue
+                  render :partial => 'error_search_result', :locals => {:result => result} %>
       </div>
   <% end %>
 </div>
