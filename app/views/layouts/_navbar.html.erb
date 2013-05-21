@@ -25,7 +25,7 @@
       <%= form_for(:search, :url => {:controller => 'search', :action => 'results'}, :html => {:class => 'navbar-search form-search pull-left'}) do |f| %>
           <div class="input-append">
             <%= f.text_field :query, :class => 'input-xlarge search-query', :placeholder => 'Search' %>
-            <button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+            <button type="submit" id="search-submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
           </div>
       <% end %>
 
