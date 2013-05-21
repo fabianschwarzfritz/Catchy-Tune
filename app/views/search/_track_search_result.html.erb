@@ -1,2 +1,8 @@
-<div class="span6"><p><%= result.name %></p></div>
-<div class="span6"><p><%= Artist.find_by_id(result.artist_id).name %></p></div>
+<div class="span5"><p><%= result.name %></p></div>
+<div class="span5"><p><%= Artist.find_by_id(result.artist_id).name %></p></div>
+<div class="span1">
+  <%= button_to 'Add', root_path, :class => 'btn btn-inverse' %>
+</div>
+<div class="span1">
+  <%= button_to 'Show', track_path(:id => result.id), :class => 'btn btn-primary' %>
+</div>
