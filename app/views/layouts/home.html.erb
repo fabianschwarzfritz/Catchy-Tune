@@ -1,9 +1,12 @@
+<% @css_sources << %w(player home)
+   @js_sources << 'player' %>
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home of <%= @current_user.username %></title>
-  <%= stylesheet_link_tag *@css_sources, :media => 'all' %>
-  <%= javascript_include_tag *@js_sources %>
+  <title><%= @page_title.blank? ? "Home of #{@current_user.username}" : @page_title %></title>
+  <%= stylesheet_link_tag *(@css_sources.flatten), :media => 'all' %>
+  <%= javascript_include_tag *(@js_sources.flatten) %>
   <%= csrf_meta_tags %>
 </head>
 <body>
