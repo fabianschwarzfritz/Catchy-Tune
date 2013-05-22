@@ -6,7 +6,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="brand" href="#">Catchy tune</a>
+      <%= link_to 'Catchy Tune', root_path, :class => 'brand' %>
 
       <div class="nav-collapse collapse">
         <ul class="nav">
@@ -21,6 +21,13 @@
           </li>
         </ul>
       </div>
+
+      <%= form_for(:search, :url => {:controller => 'search', :action => 'results'}, :html => {:class => 'navbar-search form-search pull-left'}) do |f| %>
+          <div class="input-append">
+            <%= f.text_field :query, :class => 'input-xlarge search-query', :placeholder => 'Search' %>
+            <button type="submit" id="search-submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+          </div>
+      <% end %>
 
       <ul class="nav pull-right">
         <li><p class="navbar-text pull-right">Logged in as <%= @current_user.username %></p></li>

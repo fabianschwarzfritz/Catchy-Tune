@@ -1,0 +1,16 @@
+<% @page_title = "Search results for \"#{@query}\""
+   @css_sources << 'search'
+   @js_sources << 'search' -%>
+
+<h1>Search for &quot;<%= @query %>&quot;</h1>
+<h5>Found <%= @artists_count %> artists and <%= @tracks_count %> tracks.</h5>
+
+<div class="container">
+  <% @results.each do |result| %>
+      <div class="row">
+        <%= partial_name = result.class.to_s.downcase + '_search_result'
+            render :partial => "#{partial_name}", :locals => {:result => result} rescue
+                    render :partial => 'error_search_result', :locals => {:result => result} %>
+      </div>
+  <% end %>
+</div>

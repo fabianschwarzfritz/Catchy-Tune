@@ -7,6 +7,8 @@ class Track
   belongs_to :artist
 
 
+  scope :by_name_contains, lambda { |name| where(:name => (/#{name}/i)) }
+
   self.ensure_index(:artist_id => Mongo::ASCENDING)
   self.ensure_index(:name => Mongo::ASCENDING)
 end
