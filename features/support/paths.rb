@@ -8,6 +8,8 @@ module NavigationHelpers
         '/sessions/login'
       when /the home\s?page/i
         '/sessions/home'
+      when /the search\s?result\s?page/i
+        '/search/results'
 
       else
         begin

@@ -6,6 +6,8 @@ class TracksController < ApplicationController
   def initialize
     @fs = Mongo::GridFileSystem.new(MongoMapper.database)
     @grid = Mongo::Grid.new(MongoMapper.database)
+
+    super
   end
 
   # GET /tracks
