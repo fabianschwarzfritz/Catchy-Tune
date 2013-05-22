@@ -1,6 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  def initialize
+    @css_sources = Array.new
+    @js_sources = Array.new
+
+    super
+  end
+
   protected
   def authenticate_user
     unless session[:user_id]

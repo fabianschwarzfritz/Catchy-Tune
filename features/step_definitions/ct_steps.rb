@@ -4,6 +4,10 @@ Given(/^a user "([^"]*)" with password "([^"]*)"$/) do |_username, _password|
   sign_up_with(_username, _password, _password)
 end
 
+Given(/^I am logged in with user "([^"]*)" and password "([^"]*)"$/) do |_username, _password|
+  log_in_with(_username, _password)
+end
+
 Given(/^I am logged out$/) do
   log_out
 end
