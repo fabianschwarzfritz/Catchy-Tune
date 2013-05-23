@@ -12,3 +12,20 @@
     a.tracks.create name: Faker::Lorem.words(rand(10)+1).join(' ') << tracknumber
   end
 end
+
+# Stores an example as file and to tracks colleciton
+def store(artist, songname, file)
+  track = artist.tracks.create name: songname
+
+  @file = File.open(file)
+  @grid = Mongo::GridFileSystem.new(MongoMapper.database)
+  @grid.open(track.id, 'w') do |f|
+    f.write @file
+  end
+end
+
+leftlanecruiser = Artist.create name: "Left Lane Cruiser"
+atribecalledred = Artist.create name: "A Tribe Called Red"
+
+store(leftlanecruiser, 'Hillgrass Bluebilly', 'exampledata/song.mp3')
+store(atribecalledred, 'Electric Pow Wow', 'exampledata/song2.mp3')
