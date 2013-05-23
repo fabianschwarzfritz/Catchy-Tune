@@ -126,7 +126,6 @@ function currentSongId() {
 // Skip current song and set to next song to current song
 function nextSong() {
     $.get("/playlist/next", function (data) {
-        alert("data /playlist/next" + data);
     });
 }
 
