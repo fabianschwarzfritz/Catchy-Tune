@@ -1,5 +1,5 @@
 <div class="span7"><p><%= result.name %></p></div>
-<div class="span5"><p><%= @track_artists[result.artist_id].name %></p></div>
+<div class="span5"><p><%= result.artist_tmp.name %></p></div>
 <div class="form-actions">
   <%= link_to text_with_icon('Add','icon-play-circle icon-white', :before), root_path, :class => 'btn btn-inverse btn-small' %>
   <%= link_to 'Show', track_path(:id => result.id), :class => 'btn btn-primary btn-small' %>
