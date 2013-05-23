@@ -13,9 +13,7 @@ module SearchHelper
   module ArtistExtensions
 
     def tracks_tmp
-      @tracks_tmp = Array.new if @tracks_tmp.nil?
-
-      @tracks_tmp
+      @tracks_tmp ||= Array.new
     end
 
     def tracks_tmp=(value)
