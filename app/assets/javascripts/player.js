@@ -89,8 +89,17 @@ function actionSongEnded() {
 function togglePlayPause() {
     if (getPlayer().paused) {
         getPlayer().play();
+
+        if(!$("#playprogressbar").parent()[0].classList.contains("active")) {
+            $("#playprogressbar").parent()[0].classList.add("active");
+        }
+
     } else {
         getPlayer().pause();
+
+        if($("#playprogressbar").parent()[0].classList.contains("active")) {
+            $("#playprogressbar").parent()[0].classList.remove("active");
+        }
     }
 }
 
