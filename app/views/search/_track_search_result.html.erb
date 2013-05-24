@@ -1,8 +1,7 @@
 <div class="span7"><p><%= result.name %></p></div>
 <div class="span5"><p><%= Artist.find_by_id(result.artist_id).name %></p></div>
 <div class="form-actions">
-  <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), :onclick => "addSong(" + result.id ")",  root_path, :class => 'btn btn-inverse btn-small' %>
-                     :class => 'btn btn-inverse btn-small', :id => result.id,
-                     :method => 'post', :controller => 'playlist', :action => 'add' %>
+  <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
+              :class => 'btn btn-inverse btn-small', :onclick => "addSong(\"#{result._id}\")" %>
   <%= link_to 'Show', track_path(:id => result.id), :class => 'btn btn-primary btn-small' %>
 </div>
