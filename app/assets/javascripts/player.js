@@ -89,17 +89,24 @@ function actionSongEnded() {
 function togglePlayPause() {
     if (getPlayer().paused) {
         getPlayer().play();
+
+        if(!$("#playprogressbar").parent()[0].classList.contains("active")) {
+            $("#playprogressbar").parent()[0].classList.add("active");
+        }
+
     } else {
         getPlayer().pause();
+
+        if($("#playprogressbar").parent()[0].classList.contains("active")) {
+            $("#playprogressbar").parent()[0].classList.remove("active");
+        }
     }
 }
 
 // Fetch song information of current song
 function fetchCurrentSongInformation() {
     var current_song_id = currentSongId();
-    $.get("/tracks/show/" + current_song_id, function (data) {
-        alert("data /tracks/show/id" + data);
-    });
+    $('#currentinfo').load('/playlist/showcurrentsong');
 }
 
 // Fetch stream file of current song
@@ -126,7 +133,6 @@ function currentSongId() {
 // Skip current song and set to next song to current song
 function nextSong() {
     $.get("/playlist/next", function (data) {
-        alert("data /playlist/next" + data);
     });
 }
 

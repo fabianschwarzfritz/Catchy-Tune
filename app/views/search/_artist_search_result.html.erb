@@ -9,7 +9,8 @@
               <div class="span10">
                 <p><%= track.name %></p>
               </div>
-              <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#', :class => 'btn btn-inverse btn-small' %>
+              <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
+                          :class => 'btn btn-inverse btn-small', :onclick => "addSong(\"#{result._id}\")" %>
             </div>
         <% end %>
         <%= link_to text_with_icon('Add all', 'icon-play-circle icon-white', :before), root_path, :class => 'btn btn-inverse btn-small' %>
