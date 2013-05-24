@@ -26,3 +26,9 @@ Feature: Search
     | jOnny cASh    | Walk the Line   | artist name in wrong case           |
     | walk          | Walk the Line   | only partial information            |
     | line          | Walk the Line   | only partial information            |
+
+  Scenario: Do not find a song with a not related query
+    When I fill in "Search" with "Totally different query"
+    And I press "search-submit"
+    Then I should be on the search result page
+    And I should not see "Walk the Line"
