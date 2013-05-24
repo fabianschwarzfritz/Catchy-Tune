@@ -2,6 +2,8 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
+      when /the root\s?page/i
+        '/'
       when /the sign\s?up\s?page/i
         '/users/new'
       when /the log\s?in\s?page/i
