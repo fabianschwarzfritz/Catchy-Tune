@@ -97,9 +97,7 @@ function togglePlayPause() {
 // Fetch song information of current song
 function fetchCurrentSongInformation() {
     var current_song_id = currentSongId();
-    $.get("/tracks/show/" + current_song_id, function (data) {
-        alert("data /tracks/show/id" + data);
-    });
+    $('#currentinfo').load('/playlist/showcurrentsong');
 }
 
 // Fetch stream file of current song

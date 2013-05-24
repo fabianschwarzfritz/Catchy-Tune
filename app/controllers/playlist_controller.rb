@@ -23,7 +23,7 @@ class PlaylistController < ApplicationController
   end
 
   def add
-    id = params[:id]
+    id = params[:songid]
     session[:playlist] << id if id != nil
     render :nothing => true
   end
@@ -39,6 +39,12 @@ class PlaylistController < ApplicationController
     session[:playlist].shift()
     puts session[:playlist].inspect
     render :nothing => true
+  end
+
+  def showcurrentsong
+    current_song_id = get_current_song_id()
+    @track = Track.find(current_song_id)
+    render :partial => "playlist/showcurrentsong"
   end
 
   private
