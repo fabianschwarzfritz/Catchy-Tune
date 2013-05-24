@@ -1,22 +1,20 @@
-<div class="container">
-  <div class="row">
+<div>
+  <div class="form-actions">
     <h4 class="span12"><%= result.name %></h4>
-  </div>
 
-  <div class="row">
     <div class="span12">
       <div class="container">
         <% result.tracks.each do |track| %>
-            <p><%= track.name %></p>
+            <div class="row">
+              <div class="span10">
+                <p><%= track.name %></p>
+              </div>
+              <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#', :class => 'btn btn-inverse btn-small' %>
+            </div>
         <% end %>
+        <%= link_to text_with_icon('Add all', 'icon-play-circle icon-white', :before), root_path, :class => 'btn btn-inverse btn-small' %>
+        <%= link_to 'Show', artist_path(:id => result.id), :class => 'btn btn-primary btn-small' %>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-actions">
-      <%= link_to text_with_icon('Add all', 'icon-play-circle icon-white', :before), root_path, :class => 'btn btn-inverse btn-small' %>
-      <%= link_to 'Show', artist_path(:id => result.id), :class => 'btn btn-primary btn-small' %>
     </div>
   </div>
 </div>
