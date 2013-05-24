@@ -70,7 +70,7 @@ function actionTimeUpdate() {
     var fullTime = getPlayer().duration;
     var onePercent = fullTime / 100;
     var currentPercentage = current / onePercent;
-    $("#playprogressbar").width(currentPercentage);
+    $("#playprogressbar").width(currentPercentage + "%");
 }
 
 function actionSongEnded() {
