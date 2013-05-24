@@ -14,10 +14,10 @@
         </div>
       </div>
       <div class="span7">
-        <div class="progress">
-          <div id="playprogressbar" class="bar" style="width: 60%;"></div>
+        <div class="progress progress-striped">
+          <div id="playprogressbar" class="bar" style="width: 0%;"></div>
         </div>
-        <div>Artist - Song name</div>
+        <div id="currentinfo"><%= render partial: 'playlist/showcurrentsong' %></div>
       </div>
     </div>
   </div>

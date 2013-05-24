@@ -17,7 +17,8 @@ atlassian-ide-plugin.xml
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-.sass-cache/
+/.sass-cache/
+/coverage/.last_run.json
 
 # Ignore temporarily generated gemfile
 Gemfile.lock

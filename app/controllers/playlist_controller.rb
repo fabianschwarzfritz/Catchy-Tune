@@ -12,11 +12,13 @@ class PlaylistController < ApplicationController
 
   def stream
     id = params[:songid]
-    begin
-      song = getsong(id)
-      send_data song.read, :filename => "#{id}", :type => "audio/mpeg"
-    rescue Mongo::GridFileNotFound
-      puts "Could not find song with id #{id} in database!"
+    if not id.empty?
+      begin
+        song = getsong(id)
+        send_data song.read, :filename => "#{id}", :type => "audio/mpeg"
+      rescue Mongo::GridFileNotFound
+        puts "Could not find song with id #{id} in database!"
+      end
     end
   end
 
@@ -39,9 +41,16 @@ class PlaylistController < ApplicationController
     render :nothing => true
   end
 
+  def showcurrentsong
+    current_song_id = get_current_song_id()
+    @track = Track.find(current_song_id)
+    render :partial => "playlist/showcurrentsong"
+  end
+
   private
   def getsong(id)
-    @grid.get(BSON::ObjectId(id))
+    song = @fs.exist? :filename => BSON::ObjectId(id)
+    @grid.get(song['_id'])
   end
 
   def prepare_session

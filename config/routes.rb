@@ -14,6 +14,7 @@ Catchytune::Application.routes.draw do
   post 'playlist/add'
   get 'playlist/current_song'
   get 'playlist/next'
+  get 'playlist/showcurrentsong'
 
   root :to => "sessions#login"
   match "signup", :to => "users#new"
