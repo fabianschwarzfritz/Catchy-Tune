@@ -9,4 +9,26 @@ module SearchHelper
     end
   end
 
+
+  module ArtistExtensions
+
+    def tracks_tmp
+      @tracks_tmp ||= Array.new
+    end
+
+    def tracks_tmp=(value)
+      @tracks_tmp = value
+    end
+  end
+
+  module TrackExtensions
+    def artist_tmp
+      @artist_hidden
+    end
+
+    def artist_tmp=(value)
+      @artist_hidden = value
+    end
+  end
+
 end
