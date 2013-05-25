@@ -8,7 +8,23 @@
       </button>
       <%= link_to 'Catchy Tune', root_path, :class => 'brand' %>
 
-      <div class="nav-collapse collapse">
+      <%= form_for(:search, :url => {:controller => 'search', :action => 'results'}, :html => {:class => 'navbar-search form-search pull-left'}) do |f| %>
+          <div class="input-append">
+            <%= f.text_field :query, :class => 'input-xlarge search-query', :placeholder => 'Search' %>
+            <button type="submit" id="search-submit" class="btn btn-inverse"><i class="icon-search icon-white"></i>
+            </button>
+          </div>
+      <% end %>
+
+      <ul class="nav pull-right">
+        <li class="divider-vertical"></li>
+        <li><p class="navbar-text pull-right"><%= @current_user.username %></p></li>
+        <li><%= link_to :controller => "sessions", :action => 'logout' do %>
+              <i class="icon-white icon-off"></i>
+          <% end %></li>
+      </ul>
+
+      <div class="nav-collapse collapse pull-right">
         <ul class="nav">
           <li class="active">
             <a href="#">Home</a>
@@ -21,18 +37,6 @@
           </li>
         </ul>
       </div>
-
-      <%= form_for(:search, :url => {:controller => 'search', :action => 'results'}, :html => {:class => 'navbar-search form-search pull-left'}) do |f| %>
-          <div class="input-append">
-            <%= f.text_field :query, :class => 'input-xlarge search-query', :placeholder => 'Search' %>
-            <button type="submit" id="search-submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
-          </div>
-      <% end %>
-
-      <ul class="nav pull-right">
-        <li><p class="navbar-text pull-right">Logged in as <%= @current_user.username %></p></li>
-        <li><%= link_to "logout", :controller => "sessions", :action => 'logout' %></li>
-      </ul>
     </div>
   </div>
 </div>
