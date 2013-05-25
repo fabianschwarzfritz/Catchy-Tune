@@ -8,14 +8,18 @@ class PlaylistController < ApplicationController
   def initialize
     @fs = Mongo::GridFileSystem.new(MongoMapper.database)
     @grid = Mongo::Grid.new(MongoMapper.database)
+
+    # Invoke initialize in superclass, so rails can do its initialization.
+    # Otherwise, essential functionality (such as layouts) would not work.
+    super
   end
 
   def stream
     id = params[:songid]
-    if not id.empty?
+    unless id.nil? or id.empty?
       begin
         song = getsong(id)
-        send_data song.read, :filename => "#{id}", :type => "audio/mpeg"
+        send_data song.read, :filename => "#{id}", :type => 'audio/mpeg'
       rescue Mongo::GridFileNotFound
         puts "Could not find song with id #{id} in database!"
       end
@@ -24,7 +28,7 @@ class PlaylistController < ApplicationController
 
   def add
     id = params[:songid]
-    session[:playlist] << id if id != nil
+    session[:playlist] << id unless id.nil?
     render :nothing => true
   end
 
