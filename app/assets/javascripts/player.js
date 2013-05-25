@@ -47,11 +47,12 @@ function actionPlayPause() {
 
 // Action triggered when next song is pressed
 function actionNextSong() {
-    togglePlayPause();
+    var isplaying = !getPlayer().paused;
+    setPause();
     nextSong();
     var currentSong = currentSongId();
     updateSong(currentSong);
-    togglePlayPause();
+    setStatus(isplaying);
 }
 
 // Action triggered when volume up is pressed
@@ -96,7 +97,14 @@ function togglePlayPause() {
         return;
     }
     setPause();
-    return;
+}
+
+function setStatus(play) {
+    if (play) {
+        setPlay();
+        return;
+    }
+    setPause();
 }
 
 function setPlay() {

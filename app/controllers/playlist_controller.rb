@@ -30,6 +30,7 @@ class PlaylistController < ApplicationController
 
   def current_song
     @current_song_id = get_current_song_id()
+    puts session[:playlist]
     respond_to do |format|
       format.text { render :text => @current_song_id }
     end
