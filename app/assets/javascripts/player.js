@@ -39,7 +39,8 @@ function getPlayer() {
 // Action triggered when play/pause is pressed
 function actionPlayPause() {
     if (getPlayer().getAttribute("src") == "") {
-        updateSong();
+        var currentSong = currentSongId();
+        updateSong(currentSong);
     }
     togglePlayPause();
 }
@@ -48,7 +49,8 @@ function actionPlayPause() {
 function actionNextSong() {
     togglePlayPause();
     nextSong();
-    updateSong();
+    var currentSong = currentSongId();
+    updateSong(currentSong);
     togglePlayPause();
 }
 
@@ -77,20 +79,12 @@ function actionTimeUpdate() {
 
 // Action triggered when the song which is currently playing ends
 function actionSongEnded() {
-    getPlayer().pause();
-    $("#play").html('play');
-    nextSong();
-    if (currentSongId() != null) {
-        fetchCurrentSongFile();
-        fetchCurrentSongInformation()
-        initAudioEventListeners();
-        getPlayer().play();
-    }
+    actionNextSong();
 }
 
 // Updates the song: fetch new song information and set song to audio element
-function updateSong() {
-    fetchCurrentSongFile();
+function updateSong(songid) {
+    fetchCurrentSongFile(songid);
     fetchCurrentSongInformation();
     initAudioEventListeners();
 }
@@ -98,54 +92,61 @@ function updateSong() {
 // Toggle between play and pause
 function togglePlayPause() {
     if (getPlayer().paused) {
-        getPlayer().play();
-
-        if (!$("#playprogressbar").parent()[0].classList.contains("active")) {
-            $("#playprogressbar").parent()[0].classList.add("active");
-        }
-
-        $("#play")[0].textContent = "||";
-
-    } else {
-        getPlayer().pause();
-
-        if ($("#playprogressbar").parent()[0].classList.contains("active")) {
-            $("#playprogressbar").parent()[0].classList.remove("active");
-        }
-
-        $("#play")[0].textContent = ">";
+        setPlay();
+        return;
     }
+    setPause();
+    return;
+}
+
+function setPlay() {
+    getPlayer().play();
+    if (!$("#playprogressbar").parent()[0].classList.contains("active")) {
+        $("#playprogressbar").parent()[0].classList.add("active");
+    }
+    $("#play")[0].textContent = "||";
+}
+
+function setPause() {
+    getPlayer().pause();
+    if ($("#playprogressbar").parent()[0].classList.contains("active")) {
+        $("#playprogressbar").parent()[0].classList.remove("active");
+    }
+    $("#play")[0].textContent = ">";
 }
 
 // Fetch song information of current song
 function fetchCurrentSongInformation() {
-    var current_song_id = currentSongId();
     $('#currentinfo').load('/playlist/showcurrentsong');
 }
 
 // Fetch stream file of current song
-function fetchCurrentSongFile() {
-    var current_song_id = currentSongId();
-    getPlayer().src = "/playlist/stream?songid=" + current_song_id;
+function fetchCurrentSongFile(currentsongid) {
+    getPlayer().src = "/playlist/stream?songid=" + currentsongid;
 }
 
 function currentSongId() {
-    return syncGet("/playlist/current_song.text", "get");
+    return syncRequest("/playlist/current_song.text", "get");
 }
 
 // Skip current song and set to next song to current song
 function nextSong() {
-    syncGet("/playlist/next");
+    syncRequest("/playlist/next");
 }
 
 function addSong(songid) {
     data = {"songid": songid};
-    $.post("/playlist/add", data, function (data) {
-        alert("addsong; " + data);
-    }, "json");
+    $.ajax({
+        url: "/playlist/add",
+        type: "post",
+        data: data,
+        async: false,
+        success: function (data) {
+        }
+    });
 }
 
-function syncGet(url, type) {
+function syncRequest(url, type) {
     var result = null;
     $.ajax({
         url: url,
