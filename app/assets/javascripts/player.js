@@ -94,12 +94,16 @@ function togglePlayPause() {
             $("#playprogressbar").parent()[0].classList.add("active");
         }
 
+        $("#play")[0].textContent = "pause";
+
     } else {
         getPlayer().pause();
 
         if($("#playprogressbar").parent()[0].classList.contains("active")) {
             $("#playprogressbar").parent()[0].classList.remove("active");
         }
+
+        $("#play")[0].textContent = "play";
     }
 }
 
