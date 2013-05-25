@@ -1,5 +1,7 @@
 <span>
   <% if @track %>
-    <%= @track.artist.name %> - <%= @track.name %>
+    <i><%= @track.artist.name %></i> - <%= @track.name %>
+  <% else %>
+    <i>No song playing</i>
   <% end %>
 </span>
