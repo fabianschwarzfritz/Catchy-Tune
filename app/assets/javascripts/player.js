@@ -112,7 +112,7 @@ function setPlay() {
     if (!$("#playprogressbar").parent()[0].classList.contains("active")) {
         $("#playprogressbar").parent()[0].classList.add("active");
     }
-    $("#play")[0].textContent = "||";
+    $("#play").html("<i class='icon-pause'></i>");
 }
 
 function setPause() {
@@ -120,7 +120,7 @@ function setPause() {
     if ($("#playprogressbar").parent()[0].classList.contains("active")) {
         $("#playprogressbar").parent()[0].classList.remove("active");
     }
-    $("#play")[0].textContent = ">";
+    $("#play").html("<i class='icon-play'></i>");
 }
 
 // Fetch song information of current song
