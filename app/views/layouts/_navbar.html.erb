@@ -22,12 +22,14 @@
         </ul>
       </div>
 
-      <%= form_for(:search, :url => {:controller => 'search', :action => 'results'}, :html => {:class => 'navbar-search form-search pull-left'}) do |f| %>
-          <div class="input-append">
-            <%= f.text_field :query, :class => 'input-xlarge search-query', :placeholder => 'Search' %>
-            <button type="submit" id="search-submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
-          </div>
-      <% end %>
+      <form action="/search/results" method="get" class="navbar-search form-search pull-left">
+        <div class="input-append">
+          <input type="text" name="query" class="input-xlarge search-query" placeholder="Search"/>
+          <button type="submit" id="search-submit" class="btn btn-inverse">
+            <i class="icon-search icon-white"></i>
+          </button>
+        </div>
+      </form>
 
       <ul class="nav pull-right">
         <li><p class="navbar-text pull-right">Logged in as <%= @current_user.username %></p></li>
