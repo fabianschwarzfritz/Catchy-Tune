@@ -150,6 +150,9 @@ function addSong(songid) {
         data: data,
         async: false,
         success: function (data) {
+            if (getPlayer().getAttribute("src") == "") {
+                actionPlayPause();
+            }
         }
     });
 }
