@@ -39,16 +39,17 @@ function getPlayer() {
 // Action triggered when play/pause is pressed
 function actionPlayPause() {
     if (getPlayer().getAttribute("src") == "") {
-        fetchCurrentSongFile();
-        fetchCurrentSongInformation();
-        initAudioEventListeners();
+        updateSong();
     }
     togglePlayPause();
 }
 
 // Action triggered when next song is pressed
 function actionNextSong() {
+    togglePlayPause();
     nextSong();
+    updateSong();
+    togglePlayPause();
 }
 
 // Action triggered when volume up is pressed
@@ -65,6 +66,7 @@ function actionVolumeDown() {
     getPlayer().volume = volume;
 }
 
+// Action triggered when a time update occurs
 function actionTimeUpdate() {
     var current = getPlayer().currentTime;
     var fullTime = getPlayer().duration;
@@ -73,6 +75,7 @@ function actionTimeUpdate() {
     $("#playprogressbar").width(currentPercentage + "%");
 }
 
+// Action triggered when the song which is currently playing ends
 function actionSongEnded() {
     getPlayer().pause();
     $("#play").html('play');
@@ -85,25 +88,32 @@ function actionSongEnded() {
     }
 }
 
+// Updates the song: fetch new song information and set song to audio element
+function updateSong() {
+    fetchCurrentSongFile();
+    fetchCurrentSongInformation();
+    initAudioEventListeners();
+}
+
 // Toggle between play and pause
 function togglePlayPause() {
     if (getPlayer().paused) {
         getPlayer().play();
 
-        if(!$("#playprogressbar").parent()[0].classList.contains("active")) {
+        if (!$("#playprogressbar").parent()[0].classList.contains("active")) {
             $("#playprogressbar").parent()[0].classList.add("active");
         }
 
-        $("#play")[0].textContent = "pause";
+        $("#play")[0].textContent = "||";
 
     } else {
         getPlayer().pause();
 
-        if($("#playprogressbar").parent()[0].classList.contains("active")) {
+        if ($("#playprogressbar").parent()[0].classList.contains("active")) {
             $("#playprogressbar").parent()[0].classList.remove("active");
         }
 
-        $("#play")[0].textContent = "play";
+        $("#play")[0].textContent = ">";
     }
 }
 
@@ -120,24 +130,12 @@ function fetchCurrentSongFile() {
 }
 
 function currentSongId() {
-    var result = null;
-    var scriptUrl = "/playlist/current_song.text";
-    $.ajax({
-        url: scriptUrl,
-        type: 'get',
-        dataType: 'text',
-        async: false,
-        success: function (data) {
-            result = data;
-        }
-    });
-    return result;
+    return syncGet("/playlist/current_song.text", "get");
 }
 
 // Skip current song and set to next song to current song
 function nextSong() {
-    $.get("/playlist/next", function (data) {
-    });
+    syncGet("/playlist/next");
 }
 
 function addSong(songid) {
@@ -145,6 +143,20 @@ function addSong(songid) {
     $.post("/playlist/add", data, function (data) {
         alert("addsong; " + data);
     }, "json");
+}
+
+function syncGet(url, type) {
+    var result = null;
+    $.ajax({
+        url: url,
+        type: type,
+        dataType: 'text',
+        async: false,
+        success: function (data) {
+            result = data;
+        }
+    });
+    return result;
 }
 
 
