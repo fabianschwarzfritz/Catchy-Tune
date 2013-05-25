@@ -33,5 +33,5 @@ Then(/^the song "([^"]*)" should be the last song in my playlist$/) do |song_id|
 end
 
 Then(/^a song should be played$/) do
-  pending
+  find(:link, 'play').text.should == 'pause'
 end
