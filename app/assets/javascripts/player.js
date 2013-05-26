@@ -68,12 +68,18 @@ function actionNextSong() {
 
 // Action triggered when volume up is pressed
 function actionVolumeUp() {
-    player.volume += 0.1;
+    if (player.volume < 0.9)
+        player.volume += 0.1;
+    else
+        player.volume = 1.0;
 }
 
 // Action triggered when volume down is pressed
 function actionVolumeDown() {
-    player.volume -= 0.1;
+    if (player.volume > 0.1)
+        player.volume -= 0.1;
+    else
+        player.volume = 0.0;
 }
 
 // Action triggered when a time update occurs
@@ -105,8 +111,8 @@ function togglePlayPause() {
     }
 }
 
-function setStatus(play) {
-    if (play) {
+function setStatus(should_play) {
+    if (should_play) {
         play();
     } else {
         pause();
