@@ -125,7 +125,7 @@ function setPause() {
 
 // Fetch song information of current song
 function fetchCurrentSongInformation() {
-    $('#currentinfo').load('/playlist/showcurrentsong');
+    $('#currentinfo').load('/playlist/current_song');
 }
 
 // Fetch stream file of current song

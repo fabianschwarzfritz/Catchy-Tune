@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
 
   def logout
     session[:user_id] = nil
+    session[:playlist] = nil
     redirect_to :action => 'login'
   end
 

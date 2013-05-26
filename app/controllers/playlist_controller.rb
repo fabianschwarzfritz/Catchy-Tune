@@ -33,10 +33,11 @@ class PlaylistController < ApplicationController
   end
 
   def current_song
-    @current_song_id = get_current_song_id()
+    current_song_id = get_current_song_id()
     puts session[:playlist]
     respond_to do |format|
-      format.text { render :text => @current_song_id }
+      format.text { render :text => current_song_id }
+      format.html { render :partial => 'current_song', :locals => {:track => Track.find(current_song_id)} }
     end
   end
 
@@ -44,12 +45,6 @@ class PlaylistController < ApplicationController
     session[:playlist].shift()
     puts session[:playlist].inspect
     render :nothing => true
-  end
-
-  def showcurrentsong
-    current_song_id = get_current_song_id()
-    @track = Track.find(current_song_id)
-    render :partial => "playlist/showcurrentsong"
   end
 
   private
@@ -62,7 +57,7 @@ class PlaylistController < ApplicationController
     session[:playlist] ||= Array.new
   end
 
-  def get_current_song_id()
-    return session[:playlist].first
+  def get_current_song_id
+    session[:playlist].first
   end
 end
