@@ -148,7 +148,7 @@ function fetchCurrentSongInformation() {
 
 // Fetch stream file of current song
 function fetchCurrentSongFile(currentsongid) {
-    player.src = "/playlist/stream?songid=" + currentsongid;
+    player.src = "/playlist/stream?track_id=" + currentsongid;
 }
 
 function currentSongId() {
@@ -160,8 +160,23 @@ function nextSong() {
     syncRequest("/playlist/next");
 }
 
-function addSong(songid) {
-    data = {"songid": songid};
+function addSong(song_id) {
+    data = {"track_id": song_id};
+    $.ajax({
+        url: "/playlist/add",
+        type: "post",
+        data: data,
+        async: false,
+        success: function (data) {
+            if (player.getAttribute("src") == "") {
+                actionPlayPause();
+            }
+        }
+    });
+}
+
+function addArtist(artist_id) {
+    data = {"artist_id": artist_id};
     $.ajax({
         url: "/playlist/add",
         type: "post",

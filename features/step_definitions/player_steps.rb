@@ -5,12 +5,12 @@ Given(/^I have no songs in my playlist$/) do
 end
 
 Given(/^I have "([^"]*)" in my playlist$/) do |song_id|
-  post('/playlist/add', :songid => song_id)
+  post('/playlist/add', :track_id => song_id)
 end
 
 
 When(/^I add "([^"]*)" to my playlist$/) do |song_id|
-  post('/playlist/add', :songid => song_id)
+  post('/playlist/add', :track_id => song_id)
 end
 
 
