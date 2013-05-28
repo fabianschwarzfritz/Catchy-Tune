@@ -6,9 +6,6 @@ Feature: Audio player
   Background:
     Given a user "existinguser" with password "password"
     And I am logged in with user "existinguser" and password "password"
-    And there are these files:
-      | file_id | file                 |
-      | a song  | exampledata/song.mp3 |
     And I am on the home page
 
   Scenario: Add a song to the playlist
@@ -23,6 +20,17 @@ Feature: Audio player
 
   @javascript
   Scenario: Play a song
-    Given I have "a song" in my playlist
+    Given there are these songs:
+      | song_title | artist    | file                 |
+      | a song     | an artist | exampledata/song.mp3 |
+    And I fill in "Search" with "a song"
+    And I press "search-submit"
+    And I click "Add"
     When I click "play"
-    Then a song should be played
+    Then "a song" should be played
+
+  @javascript
+  Scenario: Try to play a song with an empty playlist
+    Given I have no songs in my playlist
+    And I click "play"
+    Then no song should be played

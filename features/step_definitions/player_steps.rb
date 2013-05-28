@@ -32,6 +32,10 @@ Then(/^the song "([^"]*)" should be the last song in my playlist$/) do |song_id|
   last_song.should == song_id
 end
 
-Then(/^a song should be played$/) do
-  find(:link, 'play').text.should == 'pause'
+Then(/^"([^"]*)" should be played$/) do |song_info|
+  find(:css, '#currentinfo').text.should match(/#{song_info}/)
+end
+
+Then(/^no song should be played$/) do
+  find(:css, '#currentinfo').text.should match(/No song playing/)
 end
