@@ -42,7 +42,6 @@ class PlaylistController < ApplicationController
 
   def current_song
     current_song_id = get_current_song_id()
-    puts session[:playlist]
     respond_to do |format|
       format.text { render :text => current_song_id }
       format.html { render :partial => 'current_song', :locals => {:track => Track.find(current_song_id)} }
@@ -51,7 +50,6 @@ class PlaylistController < ApplicationController
 
   def next
     session[:playlist].shift()
-    puts session[:playlist].inspect
     render :nothing => true
   end
 
