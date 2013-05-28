@@ -34,3 +34,14 @@ Feature: Audio player
     Given I have no songs in my playlist
     And I click "play"
     Then no song should be played
+
+  @javascript
+  Scenario: Play all songs of an artist
+    Given there are these songs:
+      | song_title | artist    | file                 |
+      | a song     | an artist | exampledata/song.mp3 |
+    And I fill in "Search" with "an artist"
+    And I press "search-submit"
+    And I click "Add all"
+    When I click "play"
+    Then "a song" should be played

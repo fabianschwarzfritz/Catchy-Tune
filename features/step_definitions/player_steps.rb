@@ -1,7 +1,6 @@
 Given(/^I have no songs in my playlist$/) do
 # walk through playlist until you reach the end
-  get('/playlist/next') until
-      get('/playlist/current_song.text').body.lstrip.blank?
+  get('/playlist/next') until get('/playlist/current_song.text').body.lstrip.blank?
 end
 
 Given(/^I have "([^"]*)" in my playlist$/) do |song_id|
