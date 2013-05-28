@@ -55,8 +55,11 @@ class PlaylistController < ApplicationController
 
   private
   def get_song(id)
-    song = @fs.exist? :filename => BSON::ObjectId(id)
-    @grid.get(song['_id'])
+    if (song = @fs.exist? :filename => BSON::ObjectId(id))
+      @grid.get(song['_id'])
+    else
+      raise Mongo::GridFileNotFound
+    end
   end
 
   def prepare_session
