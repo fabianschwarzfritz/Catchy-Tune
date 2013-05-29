@@ -1,0 +1,8 @@
+<span>
+  <% track ||= nil %>
+  <% unless track.nil? %>
+    <i><%= track.artist.name %></i> - <%= track.name %>
+  <% else %>
+    <i>No song playing</i>
+  <% end %>
+</span>

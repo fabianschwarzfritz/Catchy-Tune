@@ -6,39 +6,51 @@
 
 // Initalize handlers when document is completely loaded
 $(document).ready(function () {
-    initHandler();
+    // cache ui elements for performance reasons
+    player = $("#player")[0];
+    play_pause_btn = $("#play");
+    next_btn = $("#next");
+    volume_up_btn = $("#volumeup");
+    volume_down_btn = $("#volumedown");
+    player_progressbar = $("#playprogressbar");
+    current_song_info = $('#currentinfo');
+
+    initHandlers();
 });
 
+var play_pause_btn;
+var next_btn;
+var volume_up_btn;
+var volume_down_btn;
+var player;
+var player_progressbar;
+var current_song_info;
+
 // Initialize all ui handlers
-function initHandler() {
-    $("#play").click(function () {
+function initHandlers() {
+    play_pause_btn.click(function () {
         actionPlayPause();
     });
-    $("#next").click(function () {
+    next_btn.click(function () {
         actionNextSong();
     });
-    $("#volumeup").click(function () {
+    volume_up_btn.click(function () {
         actionVolumeUp();
     });
-    $("#volumedown").click(function () {
+    volume_down_btn.click(function () {
         actionVolumeDown();
     });
 }
 
 // Initialize audio player event listeners
 function initAudioEventListeners() {
-    getPlayer().addEventListener("timeupdate", actionTimeUpdate, true);
-    getPlayer().addEventListener("ended", actionSongEnded, true);
-}
-
-// Returns the player audio element
-function getPlayer() {
-    return document.getElementById("player");
+    player.addEventListener("timeupdate", actionTimeUpdate, true);
+    player.addEventListener("ended", actionSongEnded, true);
 }
 
 // Action triggered when play/pause is pressed
 function actionPlayPause() {
-    if (getPlayer().getAttribute("src") == "") {
+    if (player.getAttribute("src") == "") {
         var currentSong = currentSongId();
         updateSong(currentSong);
     }
@@ -47,35 +59,35 @@ function actionPlayPause() {
 
 // Action triggered when next song is pressed
 function actionNextSong() {
-    var isplaying = !getPlayer().paused;
-    setPause();
+    var isplaying = !player.paused;
+    pause();
     nextSong();
-    var currentSong = currentSongId();
-    updateSong(currentSong);
+    updateSong(currentSongId());
     setStatus(isplaying);
 }
 
 // Action triggered when volume up is pressed
 function actionVolumeUp() {
-    var volume = getPlayer().volume;
-    volume += 0.1;
-    getPlayer().volume = volume;
+    if (player.volume < 0.9)
+        player.volume += 0.1;
+    else
+        player.volume = 1.0;
 }
 
 // Action triggered when volume down is pressed
 function actionVolumeDown() {
-    var volume = getPlayer().volume;
-    volume -= 0.1;
-    getPlayer().volume = volume;
+    if (player.volume > 0.1)
+        player.volume -= 0.1;
+    else
+        player.volume = 0.0;
 }
 
 // Action triggered when a time update occurs
 function actionTimeUpdate() {
-    var current = getPlayer().currentTime;
-    var fullTime = getPlayer().duration;
-    var onePercent = fullTime / 100;
-    var currentPercentage = current / onePercent;
-    $("#playprogressbar").width(currentPercentage + "%");
+    var current = player.currentTime;
+    var duration = player.duration;
+    var currentPercentage = current / duration * 100;
+    player_progressbar.width(currentPercentage + "%");
 }
 
 // Action triggered when the song which is currently playing ends
@@ -92,45 +104,51 @@ function updateSong(songid) {
 
 // Toggle between play and pause
 function togglePlayPause() {
-    if (getPlayer().paused) {
-        setPlay();
-        return;
+    if (player.paused) {
+        play();
+    } else {
+        pause();
     }
-    setPause();
 }
 
-function setStatus(play) {
-    if (play) {
-        setPlay();
-        return;
+function setStatus(should_play) {
+    if (should_play) {
+        play();
+    } else {
+        pause();
     }
-    setPause();
 }
 
-function setPlay() {
-    getPlayer().play();
-    if (!$("#playprogressbar").parent()[0].classList.contains("active")) {
-        $("#playprogressbar").parent()[0].classList.add("active");
+function play() {
+    player.play();
+
+    var progressbar_container = player_progressbar.parent()[0];
+    if (!progressbar_container.classList.contains("active")) {
+        progressbar_container.classList.add("active");
     }
-    $("#play").html("<i class='icon-pause'></i>");
+
+    play_pause_btn.html("<i class='icon-pause'></i>");
 }
 
-function setPause() {
-    getPlayer().pause();
-    if ($("#playprogressbar").parent()[0].classList.contains("active")) {
-        $("#playprogressbar").parent()[0].classList.remove("active");
+function pause() {
+    player.pause();
+
+    var progressbar_container = player_progressbar.parent()[0];
+    if (progressbar_container.classList.contains("active")) {
+        progressbar_container.classList.remove("active");
     }
-    $("#play").html("<i class='icon-play'></i>");
+
+    play_pause_btn.html("<i class='icon-play'></i>");
 }
 
 // Fetch song information of current song
 function fetchCurrentSongInformation() {
-    $('#currentinfo').load('/playlist/showcurrentsong');
+    current_song_info.load('/playlist/current_song');
 }
 
 // Fetch stream file of current song
 function fetchCurrentSongFile(currentsongid) {
-    getPlayer().src = "/playlist/stream?songid=" + currentsongid;
+    player.src = "/playlist/stream?track_id=" + currentsongid;
 }
 
 function currentSongId() {
@@ -142,15 +160,30 @@ function nextSong() {
     syncRequest("/playlist/next");
 }
 
-function addSong(songid) {
-    data = {"songid": songid};
+function addSong(song_id) {
+    data = {"track_id": song_id};
     $.ajax({
         url: "/playlist/add",
         type: "post",
         data: data,
         async: false,
         success: function (data) {
-            if (getPlayer().getAttribute("src") == "") {
+            if (player.getAttribute("src") == "") {
+                actionPlayPause();
+            }
+        }
+    });
+}
+
+function addArtist(artist_id) {
+    data = {"artist_id": artist_id};
+    $.ajax({
+        url: "/playlist/add",
+        type: "post",
+        data: data,
+        async: false,
+        success: function (data) {
+            if (player.getAttribute("src") == "") {
                 actionPlayPause();
             }
         }
