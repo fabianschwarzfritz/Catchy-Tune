@@ -7,17 +7,17 @@
     <div id="playerholder" class="container">
       <div class="span4">
         <div class="btn-group">
-          <button id="play" class="btn">play</button>
-          <button id="next" class="btn">next</button>
-          <button id="volumeup" class="btn">+</button>
-          <button id="volumedown" class="btn">-</button>
+          <a href="#" id="play" class="btn"><i class="icon-play"></i></a>
+          <a href="#" id="next" class="btn"><i class="icon-step-forward"></i></a>
+          <a href="#" id="volumedown" class="btn"><i class="icon-volume-down"></i></a>
+          <a href="#" id="volumeup" class="btn"><i class="icon-volume-up"></i></a>
         </div>
       </div>
       <div class="span7">
         <div class="progress progress-striped">
           <div id="playprogressbar" class="bar" style="width: 0%;"></div>
         </div>
-        <div id="currentinfo"><%= render partial: 'playlist/showcurrentsong' %></div>
+        <div id="currentinfo"><%= render partial: 'playlist/current_song' %></div>
       </div>
     </div>
   </div>

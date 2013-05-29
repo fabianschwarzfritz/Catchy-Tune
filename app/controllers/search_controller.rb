@@ -6,6 +6,7 @@ class SearchController < ApplicationController
   def initialize
     @query = '<<no query>>'
     @artists_count = @tracks_count = 0
+    @results = Array.new
 
     # Invoke initialize in superclass, so rails can do its initialization.
     # Otherwise, essential functionality (such as layouts) would not work.
@@ -13,8 +14,8 @@ class SearchController < ApplicationController
   end
 
   def results
-    if params[:search]
-      @query = params[:search][:query]
+    if params[:query]
+      @query = params[:query]
 
       artists_h = search_artist @query
 

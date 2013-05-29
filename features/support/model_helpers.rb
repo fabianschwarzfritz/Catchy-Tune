@@ -6,16 +6,23 @@ module ModelHelpers
     Artist.new({:name => artist_name}).save
   end
 
-  def add_track(track_title, artist_name)
+  def add_track(track_title, artist_name, file_path = nil)
     artist = Artist.find_by_name(artist_name)
 
     if artist.nil?
       raise "No artist with name #{artist_name} found"
     else
-      Track.new({:name => track_title, :artist_id => artist._id}).save
+      track = artist.tracks.create name: track_title
+
+      add_file track.id.to_s, file_path unless file_path.nil?
     end
   end
 
+  def add_file(file_id, file_path)
+    file = File.open(file_path)
+    gridfs = Mongo::GridFileSystem.new(MongoMapper.database)
+    gridfs.open(file_id, 'w') { |f| f.write file }
+  end
 end
 
 World(ModelHelpers)

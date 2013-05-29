@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+# Ignore OS files
+Thumbs.db
+
 # Ignore bundler config
 /.bundle
 
@@ -18,7 +21,7 @@ atlassian-ide-plugin.xml
 /log/*.log
 /tmp
 /.sass-cache/
-/coverage/.last_run.json
+/coverage/
 
 # Ignore temporarily generated gemfile
 Gemfile.lock

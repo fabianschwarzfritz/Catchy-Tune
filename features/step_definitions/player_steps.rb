@@ -1,16 +1,15 @@
 Given(/^I have no songs in my playlist$/) do
 # walk through playlist until you reach the end
-  get('/playlist/next') until
-      get('/playlist/current_song.text').body.lstrip.blank?
+  get('/playlist/next') until get('/playlist/current_song.text').body.lstrip.blank?
 end
 
 Given(/^I have "([^"]*)" in my playlist$/) do |song_id|
-  post('/playlist/add', :songid => song_id)
+  post('/playlist/add', :track_id => song_id)
 end
 
 
 When(/^I add "([^"]*)" to my playlist$/) do |song_id|
-  post('/playlist/add', :songid => song_id)
+  post('/playlist/add', :track_id => song_id)
 end
 
 
@@ -32,6 +31,10 @@ Then(/^the song "([^"]*)" should be the last song in my playlist$/) do |song_id|
   last_song.should == song_id
 end
 
-Then(/^a song should be played$/) do
-  pending
+Then(/^"([^"]*)" should be played$/) do |song_info|
+  find(:css, '#currentinfo').text.should match(/#{song_info}/)
+end
+
+Then(/^no song should be played$/) do
+  find(:css, '#currentinfo').text.should match(/No song playing/)
 end

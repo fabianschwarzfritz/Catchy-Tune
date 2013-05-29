@@ -18,7 +18,30 @@ Feature: Audio player
     When I add "another song" to my playlist
     Then the song "another song" should be the last song in my playlist
 
+  @javascript
   Scenario: Play a song
-    Given I have "a song" in my playlist
-    When I press "play"
-    Then a song should be played
+    Given there are these songs:
+      | song_title | artist    | file                 |
+      | a song     | an artist | exampledata/song.mp3 |
+    And I fill in "Search" with "a song"
+    And I press "search-submit"
+    And I click "Add"
+    When I click "play"
+    Then "a song" should be played
+
+  @javascript
+  Scenario: Try to play a song with an empty playlist
+    Given I have no songs in my playlist
+    And I click "play"
+    Then no song should be played
+
+  @javascript
+  Scenario: Play all songs of an artist
+    Given there are these songs:
+      | song_title | artist    | file                 |
+      | a song     | an artist | exampledata/song.mp3 |
+    And I fill in "Search" with "an artist"
+    And I press "search-submit"
+    And I click "Add all"
+    When I click "play"
+    Then "a song" should be played
