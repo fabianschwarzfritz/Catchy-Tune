@@ -1,4 +1,6 @@
 Catchytune::Application.routes.draw do
+  get "static/about"
+
   get 'sessions/login'
   post 'sessions/login'
   get 'sessions/logout'
