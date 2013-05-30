@@ -7,7 +7,6 @@
  */
 //= require jquery.pjax
 
-alert("navbar loaded");
 $(function () {
     $(document).pjax('a[data-pjax]', '#pjax-container');
     $(document).on('submit', 'form[data-pjax]', function (event) {
