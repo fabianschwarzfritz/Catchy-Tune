@@ -51,11 +51,11 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
-    id = params[:id]
-    file = IO.read(params[:upload][:file])
-    storesong(id)
-
     @track = Track.new(params[:track])
+
+    uploaded_file = params[:track][:file]
+    file_content = uploaded_file.read
+    storesong(file_content, @track.id)
 
     respond_to do |format|
       if @track.save
@@ -97,7 +97,8 @@ class TracksController < ApplicationController
   end
 
   private
-  def storesong(id)
-    @fs.put(file, :filename => id)
+  def storesong(file, id)
+    @grid.put(file, :filename => id)
+    puts "saved"
   end
 end
