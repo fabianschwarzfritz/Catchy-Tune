@@ -16,4 +16,7 @@
 //= require bootstrap
 $(function() {
     $(document).pjax('a','#pjax-container');
+    $(document).on('submit', 'form[data-pjax]', function(event) {
+        $.pjax.submit(event, '#pjax-container');
+    });
 })

@@ -8,7 +8,7 @@
       </button>
       <%= link_to 'Catchy Tune', root_path, :class => 'brand' %>
 
-      <form action="/search/results" method="get" class="navbar-search form-search pull-left">
+      <form action="/search/results" method="get" class="navbar-search form-search pull-left" data-pjax>
         <div class="input-append">
           <input type="text" name="query" class="input-xlarge search-query" placeholder="Search"/>
           <button type="submit" id="search-submit" class="btn btn-inverse">
