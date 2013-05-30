@@ -1,5 +1,5 @@
-<% @css_sources << %w(player home)
-   @js_sources << 'player' %>
+<% @css_sources << %w(application player home)
+   @js_sources << %w(application player) %>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,9 @@
 
 <%= render :partial => '/layouts/navbar' %>
 
-<div class="container">
+<p><%= rand(1000) %></p>
+
+<div class="container" id="pjax-container">
   <%= yield %>
 </div>
 
