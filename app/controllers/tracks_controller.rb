@@ -51,11 +51,9 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
-    @track = Track.new(params[:track])
-
-    uploaded_file = params[:track][:file]
-    file_content = uploaded_file.read
-    storesong(file_content, @track.id)
+    params[:track].extend TracksHelper::ParamsExtensions
+    @track = Track.new(params[:track].entity_params)
+    update_file(params[:track][:file], @track.id)
 
     respond_to do |format|
       if @track.save
@@ -71,10 +69,13 @@ class TracksController < ApplicationController
   # PUT /tracks/1
   # PUT /tracks/1.json
   def update
+    params[:track].extend TracksHelper::ParamsExtensions
     @track = Track.find(params[:id])
 
     respond_to do |format|
-      if @track.update_attributes(params[:track])
+      if @track.update_attributes(params[:track].entity_params)
+        update_file(params[:track][:file], @track.id)
+
         format.html { redirect_to @track, notice: 'Track was successfully updated.' }
         format.json { head :no_content }
       else
@@ -97,8 +98,14 @@ class TracksController < ApplicationController
   end
 
   private
-  def storesong(file, id)
+  def update_file(file, track_id)
+    unless file.nil?
+      file_content = file.read
+      store_file file_content, track_id
+    end
+  end
+
+  def store_file(file, id)
     @grid.put(file, :filename => id)
-    puts "saved"
   end
 end
