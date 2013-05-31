@@ -60,6 +60,7 @@ class TracksController < ApplicationController
         format.html { redirect_to @track, notice: 'Track was successfully created.' }
         format.json { render json: @track, status: :created, location: @track }
       else
+        delete_file @track.id
         format.html { render action: "new" }
         format.json { render json: @track.errors, status: :unprocessable_entity }
       end
@@ -91,6 +92,8 @@ class TracksController < ApplicationController
     @track = Track.find(params[:id])
     @track.destroy
 
+    delete_file @track.id
+
     respond_to do |format|
       format.html { redirect_to tracks_url }
       format.json { head :no_content }
@@ -99,6 +102,8 @@ class TracksController < ApplicationController
 
   private
   def update_file(file, track_id)
+    delete_file track_id
+
     unless file.nil?
       file_content = file.read
       store_file file_content, track_id
@@ -107,5 +112,10 @@ class TracksController < ApplicationController
 
   def store_file(file, id)
     @grid.put(file, :filename => id)
+  end
+
+  def delete_file(id)
+    file = @grid.exist? :filename => id
+    @grid.delete file['_id'] if file
   end
 end
