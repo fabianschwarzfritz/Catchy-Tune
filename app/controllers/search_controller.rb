@@ -38,7 +38,7 @@ class SearchController < ApplicationController
         tracks.each do |track|
           track.extend SearchHelper::TrackExtensions
 
-          track.artist_tmp = track_artists_h[track.artist_id]
+          track.artist_prefetched = track_artists_h[track.artist_id]
         end
       end
 
@@ -65,7 +65,7 @@ class SearchController < ApplicationController
     # query #2: find all artists' tracks
     # get track information for all found artists and map them onto their artists afterwards
     Track.where(:artist_id => artists_h.keys).each do |track|
-      artists_h[track.artist_id].tracks_tmp << track
+      artists_h[track.artist_id].tracks_prefetched << track
     end unless artists_h.empty?
 
     artists_h

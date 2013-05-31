@@ -1,6 +1,6 @@
 <div class="form-actions">
   <div class="span5"><p><%= result.name %></p></div>
-  <div class="span5"><p><%= result.artist_tmp.name %></p></div>
+  <div class="span5"><p><%= result.artist_prefetched.name %></p></div>
   <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
               :class => 'btn btn-inverse btn-small', :onclick => "addSong(\"#{result._id}\")" %>
   <%= link_to 'Show', track_path(:id => result.id), :class => 'btn btn-primary btn-small', :data => {:pjax => true} %>
