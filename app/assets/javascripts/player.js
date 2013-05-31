@@ -16,6 +16,8 @@ $(document).ready(function () {
     current_song_info = $('#currentinfo');
 
     initHandlers();
+
+    player.src = "";
 });
 
 var play_pause_btn;
@@ -51,18 +53,18 @@ function initAudioEventListeners() {
 // Action triggered when play/pause is pressed
 function actionPlayPause() {
     if (player.getAttribute("src") == "") {
-        var currentSong = currentSongId();
-        updateSong(currentSong);
+        // First time play is pressed
+        updateSong();
+        play();
+    } else {
+        togglePlayPause();
     }
-    togglePlayPause();
 }
 
 // Action triggered when next song is pressed
 function actionNextSong() {
     var isplaying = !player.paused;
-    pause();
     nextSong();
-    updateSong(currentSongId());
     setStatus(isplaying);
 }
 
@@ -96,19 +98,30 @@ function actionSongEnded() {
 }
 
 // Updates the song: fetch new song information and set song to audio element
-function updateSong(songid) {
-    fetchCurrentSongFile(songid);
+function updateSong() {
+    var currentSong = currentSongId();
+
+    if (/\S/.test(currentSong)) {
+        fetchCurrentSongFile(currentSong);
+        initAudioEventListeners();
+    } else {
+        // current song id is empty or contains only whitespaces
+        stop();
+    }
+
     fetchCurrentSongInformation();
-    initAudioEventListeners();
+}
+
+// Skip current song and set to next song to current song
+function nextSong() {
+    pause();
+    syncRequest("/playlist/next");
+    updateSong();
 }
 
 // Toggle between play and pause
 function togglePlayPause() {
-    if (player.paused) {
-        play();
-    } else {
-        pause();
-    }
+    setStatus(player.paused);
 }
 
 function setStatus(should_play) {
@@ -120,23 +133,36 @@ function setStatus(should_play) {
 }
 
 function play() {
-    player.play();
+    if (/\S/.test(player.getAttribute("src"))) {
+        player.play();
 
-    var progressbar_container = player_progressbar.parent()[0];
-    if (!progressbar_container.classList.contains("active")) {
-        progressbar_container.classList.add("active");
+        var progressbar_container = player_progressbar.parent()[0];
+        if (!progressbar_container.classList.contains("active")) {
+            progressbar_container.classList.add("active");
+        }
+
+        play_pause_btn.html("<i class='icon-pause'></i>");
     }
-
-    play_pause_btn.html("<i class='icon-pause'></i>");
 }
 
 function pause() {
-    player.pause();
+    if (/\S/.test(player.getAttribute("src"))) {
+        player.pause();
 
-    var progressbar_container = player_progressbar.parent()[0];
-    if (progressbar_container.classList.contains("active")) {
-        progressbar_container.classList.remove("active");
+        var progressbar_container = player_progressbar.parent()[0];
+        if (progressbar_container.classList.contains("active")) {
+            progressbar_container.classList.remove("active");
+        }
+
+        play_pause_btn.html("<i class='icon-play'></i>");
     }
+}
+
+function stop() {
+    player.pause();
+    player.src = "";
+
+    player_progressbar.width("0%");
 
     play_pause_btn.html("<i class='icon-play'></i>");
 }
@@ -153,11 +179,6 @@ function fetchCurrentSongFile(currentsongid) {
 
 function currentSongId() {
     return syncRequest("/playlist/current_song.text", "get");
-}
-
-// Skip current song and set to next song to current song
-function nextSong() {
-    syncRequest("/playlist/next");
 }
 
 function addSong(song_id) {
