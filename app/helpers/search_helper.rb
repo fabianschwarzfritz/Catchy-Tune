@@ -12,22 +12,22 @@ module SearchHelper
 
   module ArtistExtensions
 
-    def tracks_tmp
-      @tracks_tmp ||= Array.new
+    def tracks_prefetched
+      @tracks_prefetched ||= Array.new
     end
 
-    def tracks_tmp=(value)
-      @tracks_tmp = value
+    def tracks_prefetched=(value)
+      @tracks_prefetched = value
     end
   end
 
   module TrackExtensions
-    def artist_tmp
-      @artist_hidden
+    def artist_prefetched
+      @artist_prefetched
     end
 
-    def artist_tmp=(value)
-      @artist_hidden = value
+    def artist_prefetched=(value)
+      @artist_prefetched = value
     end
   end
 
