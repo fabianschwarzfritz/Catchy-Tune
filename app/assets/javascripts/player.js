@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     initHandlers();
 
-    player.src = "";
+    state = "stopped";
 });
 
 var play_pause_btn;
@@ -27,6 +27,8 @@ var volume_down_btn;
 var player;
 var player_progressbar;
 var current_song_info;
+
+var state;
 
 // Initialize all ui handlers
 function initHandlers() {
@@ -52,20 +54,25 @@ function initAudioEventListeners() {
 
 // Action triggered when play/pause is pressed
 function actionPlayPause() {
-    if (player.getAttribute("src") == "") {
-        // First time play is pressed
-        updateSong();
-        play();
-    } else {
-        togglePlayPause();
+    switch (state) {
+        case "stopped":
+            updateSong();
+            if (state != "stopped") {
+                play();
+            }
+            break;
+        case "playing":
+            pause();
+            break;
+        case "paused":
+            play();
+            break;
     }
 }
 
 // Action triggered when next song is pressed
 function actionNextSong() {
-    var isplaying = !player.paused;
     nextSong();
-    setStatus(isplaying);
 }
 
 // Action triggered when volume up is pressed
@@ -86,15 +93,27 @@ function actionVolumeDown() {
 
 // Action triggered when a time update occurs
 function actionTimeUpdate() {
-    var current = player.currentTime;
-    var duration = player.duration;
-    var currentPercentage = current / duration * 100;
-    player_progressbar.width(currentPercentage + "%");
+    if (state == "playing") {
+        var current = player.currentTime;
+        var duration = player.duration;
+        var currentPercentage = current / duration * 100;
+        player_progressbar.width(currentPercentage + "%");
+    }
 }
 
 // Action triggered when the song which is currently playing ends
 function actionSongEnded() {
-    actionNextSong();
+    nextSong();
+}
+
+// Skip current song and set to next song to current song
+function nextSong() {
+    stop();
+    syncRequest("/playlist/next");
+    updateSong();
+    if (state != "stopped") {
+        play();
+    }
 }
 
 // Updates the song: fetch new song information and set song to audio element
@@ -104,6 +123,7 @@ function updateSong() {
     if (/\S/.test(currentSong)) {
         fetchCurrentSongFile(currentSong);
         initAudioEventListeners();
+        state = "paused";
     } else {
         // current song id is empty or contains only whitespaces
         stop();
@@ -112,59 +132,39 @@ function updateSong() {
     fetchCurrentSongInformation();
 }
 
-// Skip current song and set to next song to current song
-function nextSong() {
-    pause();
-    syncRequest("/playlist/next");
-    updateSong();
-}
-
-// Toggle between play and pause
-function togglePlayPause() {
-    setStatus(player.paused);
-}
-
-function setStatus(should_play) {
-    if (should_play) {
-        play();
-    } else {
-        pause();
-    }
-}
-
 function play() {
-    if (/\S/.test(player.getAttribute("src"))) {
-        player.play();
+    player.play();
 
-        var progressbar_container = player_progressbar.parent()[0];
-        if (!progressbar_container.classList.contains("active")) {
-            progressbar_container.classList.add("active");
-        }
-
-        play_pause_btn.html("<i class='icon-pause'></i>");
+    var progressbar_container = player_progressbar.parent()[0];
+    if (!progressbar_container.classList.contains("active")) {
+        progressbar_container.classList.add("active");
     }
+
+    play_pause_btn.html("<i class='icon-pause'></i>");
+    state = "playing";
 }
 
 function pause() {
-    if (/\S/.test(player.getAttribute("src"))) {
-        player.pause();
+    player.pause();
 
-        var progressbar_container = player_progressbar.parent()[0];
-        if (progressbar_container.classList.contains("active")) {
-            progressbar_container.classList.remove("active");
-        }
-
-        play_pause_btn.html("<i class='icon-play'></i>");
+    var progressbar_container = player_progressbar.parent()[0];
+    if (progressbar_container.classList.contains("active")) {
+        progressbar_container.classList.remove("active");
     }
+
+    play_pause_btn.html("<i class='icon-play'></i>");
+    state = "paused";
 }
 
 function stop() {
-    player.pause();
-    player.src = "";
+    if (/\S/.test(player.getAttribute("src"))) {
+        player.pause();
+    }
 
     player_progressbar.width("0%");
 
     play_pause_btn.html("<i class='icon-play'></i>");
+    state = "stopped";
 }
 
 // Fetch song information of current song
@@ -189,7 +189,7 @@ function addSong(song_id) {
         data: data,
         async: false,
         success: function (data) {
-            if (player.getAttribute("src") == "") {
+            if (state == "stopped") {
                 actionPlayPause();
             }
         }
@@ -204,7 +204,7 @@ function addArtist(artist_id) {
         data: data,
         async: false,
         success: function (data) {
-            if (player.getAttribute("src") == "") {
+            if (state == "stopped") {
                 actionPlayPause();
             }
         }
