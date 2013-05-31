@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains RubyMine.
- * User: D056995
- * Date: 30.05.13
- * Time: 18:57
- * To change this template use File | Settings | File Templates.
- */
 //= require jquery.pjax
 
 $(function () {
