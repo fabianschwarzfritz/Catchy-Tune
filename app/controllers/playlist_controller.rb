@@ -59,9 +59,10 @@ class PlaylistController < ApplicationController
     file = @grid.exist? :filename => id
 
     if file
-      file = file.symbolize_keys
-      file[:content] = @grid.get(file[:_id])
-      file
+      file_h = Hash.new
+      file.each_pair { |key, value| file_h[key.underscore.to_sym] = value}
+      file_h[:content] = @grid.get(file_h[:_id])
+      file_h
     else
       raise Mongo::GridFileNotFound
     end
