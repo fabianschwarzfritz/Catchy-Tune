@@ -4,7 +4,6 @@ class TracksController < ApplicationController
   layout 'home'
 
   def initialize
-    @fs = Mongo::GridFileSystem.new(MongoMapper.database)
     @grid = Mongo::Grid.new(MongoMapper.database)
 
     super
@@ -106,16 +105,16 @@ class TracksController < ApplicationController
 
     unless file.nil?
       file_content = file.read
-      store_file file_content, track_id
+      store_file file_content, track_id, file.content_type
     end
   end
 
-  def store_file(file, id)
-    @grid.put(file, :filename => id)
+  def store_file(file, id, content_type=nil)
+    @grid.put(file, :filename => id, :content_type => content_type)
   end
 
-  def delete_file(id)
-    file = @grid.exist? :filename => id
+  def delete_file(name)
+    file = @grid.exist? :filename => name
     @grid.delete file['_id'] if file
   end
 end

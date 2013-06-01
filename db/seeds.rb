@@ -19,7 +19,7 @@ def store(artist, songname, file)
 
   @file = File.open(file)
   @grid = Mongo::GridFileSystem.new(MongoMapper.database)
-  @grid.open(track.id, 'w') do |f|
+  @grid.open(track.id, 'w', :content_type => 'audio/mpeg') do |f|
     f.write @file
   end
 end

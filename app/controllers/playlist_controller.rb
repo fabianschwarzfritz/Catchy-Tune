@@ -18,8 +18,8 @@ class PlaylistController < ApplicationController
     id = params[:track_id]
     unless id.nil? or id.empty?
       begin
-        song = get_song(id)
-        send_data song.read, :filename => "#{id}", :type => 'audio/mpeg'
+        song = get_song BSON::ObjectId.from_string id
+        send_data song[:content].read, :filename => song[:filename], :type => song[:content_type]
       rescue Mongo::GridFileNotFound
         puts "Could not find song with id #{id} in database!"
       end
@@ -41,7 +41,8 @@ class PlaylistController < ApplicationController
   end
 
   def current_song
-    current_song_id = get_current_song_id()
+    current_song_id = session[:playlist].first
+
     respond_to do |format|
       format.text { render :text => current_song_id }
       format.html { render :partial => 'current_song', :locals => {:track => Track.find(current_song_id)} }
@@ -55,8 +56,12 @@ class PlaylistController < ApplicationController
 
   private
   def get_song(id)
-    if (song = @fs.exist? :filename => BSON::ObjectId(id))
-      @grid.get(song['_id'])
+    file = @grid.exist? :filename => id
+
+    if file
+      file = file.symbolize_keys
+      file[:content] = @grid.get(file[:_id])
+      file
     else
       raise Mongo::GridFileNotFound
     end
@@ -64,9 +69,5 @@ class PlaylistController < ApplicationController
 
   def prepare_session
     session[:playlist] ||= Array.new
-  end
-
-  def get_current_song_id
-    session[:playlist].first
   end
 end
