@@ -34,15 +34,19 @@ var state;
 function initHandlers() {
     play_pause_btn.click(function () {
         actionPlayPause();
+        return false;
     });
     next_btn.click(function () {
         actionNextSong();
+        return false;
     });
     volume_up_btn.click(function () {
         actionVolumeUp();
+        return false;
     });
     volume_down_btn.click(function () {
         actionVolumeDown();
+        return false;
     });
 }
 

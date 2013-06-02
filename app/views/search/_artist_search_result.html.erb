@@ -10,11 +10,11 @@
                 <p><%= track.name %></p>
               </div>
               <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
-                          :class => 'btn btn-inverse btn-small', :onclick => "addSong(\"#{track.id}\")" %>
+                          :class => 'btn btn-inverse btn-small', :onclick => "addSong(\"#{track.id}\"); return false;" %>
             </div>
         <% end %>
         <%= link_to text_with_icon('Add all', 'icon-play-circle icon-white', :before), '#',
-                    :class => 'btn btn-inverse btn-small', :onclick => "addArtist(\"#{result.id}\")" %>
+                    :class => 'btn btn-inverse btn-small', :onclick => "addArtist(\"#{result.id}\"); return false;" %>
         <%= link_to 'Show', artist_path(:id => result.id), :class => 'btn btn-primary btn-small', :data => {:pjax => true} %>
       </div>
     </div>
