@@ -101,10 +101,12 @@ class TracksController < ApplicationController
   end
 
   private
-  def verify_user_is_track_artist
-    @track = Track.find(params[:id])
-
-    redirect_to(:controller => :artists, :action => :show) unless @track.artist.user == @current_user
+  def verify_user_is_artist
+    if @current_user.is_artist
+      redirect_to(:controller => :artists, :action => :show)
+    else
+      redirect_to(:controller => :sessions, :action => :home)
+    end
   end
 
   def update_file(file, track_id)
