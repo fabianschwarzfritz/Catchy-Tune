@@ -1,7 +1,18 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'support', 'session_helpers'))
 
 Given(/^a user "([^"]*)" with password "([^"]*)"$/) do |_username, _password|
+  log_out if logged_in?
+
   sign_up_with(_username, _password, _password)
+end
+
+Given(/^an artist "([^"]*)" with user "([^"]*)" and password "([^"]*)"$/) do |artist_name, user_name, password|
+  log_out if logged_in?
+
+  sign_up_with(user_name, password, password)
+  visit path_to 'the register-artist page'
+  fill_in('Name', :with => artist_name)
+  click_link_or_button('Create')
 end
 
 Given(/^I am logged in with user "([^"]*)" and password "([^"]*)"$/) do |_username, _password|

@@ -15,7 +15,3 @@ Given(/^there are these files:$/) do |table|
     add_file file['file_id'], file['file']
   end
 end
-
-Given(/^an artist "([^"]*)" with user "([^"]*)" and password "([^"]*)"$/) do |artist_name, user_name, password|
-  pending
-end
