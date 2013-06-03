@@ -16,7 +16,9 @@ Given(/^an artist "([^"]*)" with user "([^"]*)" and password "([^"]*)"$/) do |ar
 end
 
 Given(/^I am logged in with user "([^"]*)" and password "([^"]*)"$/) do |_username, _password|
-  log_in_with(_username, _password)
+  # allow implicit login via registration
+  # not necessary to test explicitly, because this step is only called in preparation for other tests
+  log_in_with(_username, _password) unless logged_in_user == _username
 end
 
 Given(/^I am logged out$/) do

@@ -3,7 +3,7 @@ require 'mongo'
 
 class PlaylistController < ApplicationController
 
-  before_filter :prepare_session
+  before_filter :authenticate_user, :prepare_session
 
   def initialize
     @fs = Mongo::GridFileSystem.new(MongoMapper.database)
