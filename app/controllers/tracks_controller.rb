@@ -1,6 +1,7 @@
 class TracksController < ApplicationController
 
   before_filter :authenticate_user
+  before_filter :verify_user_is_artist, :only => [:new, :create]
   layout 'home'
 
   def initialize
@@ -100,6 +101,12 @@ class TracksController < ApplicationController
   end
 
   private
+  def verify_user_is_track_artist
+    @track = Track.find(params[:id])
+
+    redirect_to(:controller => :artists, :action => :show) unless @track.artist.user == @current_user
+  end
+
   def update_file(file, track_id)
     delete_file track_id
 
