@@ -45,6 +45,12 @@ Feature: User management
     | unknownuser  | password             | wrong username |
 
 
+  Scenario: Log out
+    Given I am logged in with user "existinguser" and password "password"
+    When I visit the home page
+    And I click "logout"
+    Then I should not be logged in
+
   Scenario: Try to get in without logging in
     Given I am logged out
     When I visit the home page
@@ -54,4 +60,3 @@ Feature: User management
     Given I am logged in with user "existinguser" and password "password"
     When I visit the root page
     Then I should be on the home page
-
