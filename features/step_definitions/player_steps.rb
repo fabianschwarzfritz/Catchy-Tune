@@ -1,34 +1,36 @@
 Given(/^I have no songs in my playlist$/) do
 # walk through playlist until you reach the end
-  get('/playlist/next') until get('/playlist/current_song.text').body.lstrip.blank?
+  click_link_or_button('next') until page.has_content?('No song playing')
 end
 
-Given(/^I have "([^"]*)" in my playlist$/) do |song_id|
-  post('/playlist/add', :track_id => song_id)
+Given(/^I have "([^"]*)" in my playlist$/) do |song|
+  search_for song
+  click_link_or_button(:text => 'Add')
 end
 
 
-When(/^I add "([^"]*)" to my playlist$/) do |song_id|
-  post('/playlist/add', :track_id => song_id)
+When(/^I add "([^"]*)" to my playlist$/) do |song|
+  search_for song
+  click_link_or_button('Add', :text => 'Add')
 end
 
 
 Then(/^I should have a song in my playlist$/) do
-# accept any answer except only whitespaces
-  get('/playlist/current_song.text').body.should_not match(/^\s*$/)
+  click_link_or_button('play')
+  within('#playerholder') { should_not have_content('No song playing') }
 end
 
-Then(/^the song "([^"]*)" should be the last song in my playlist$/) do |song_id|
-  song = get('/playlist/current_song.text').body.lstrip
-  last_song = song
+Then(/^the song "([^"]*)" should be the last song in my playlist$/) do |song|
+  tmp = find('#currentinfo').text
+  last_song = tmp
 
-  until song.blank?
-    last_song = song
-    get('/playlist/next')
-    song = get('/playlist/current_song.text').body.lstrip
+  until /No song playing/i === tmp do
+    last_song = tmp
+    click_link_or_button('next')
+    tmp = find('#currentinfo').text
   end
 
-  last_song.should == song_id
+  last_song.should == song
 end
 
 Then(/^"([^"]*)" should be played$/) do |song_info|
