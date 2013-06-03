@@ -14,14 +14,22 @@ module ModelHelpers
     else
       track = artist.tracks.create name: track_title
 
-      add_file track.id.to_s, file_path unless file_path.nil?
+      add_file(track.id, file_path) unless file_path.nil?
     end
   end
 
-  def add_file(file_id, file_path)
+  def add_file(filename, file_path)
     file = File.open(file_path)
-    gridfs = Mongo::GridFileSystem.new(MongoMapper.database)
-    gridfs.open(file_id, 'w') { |f| f.write file }
+
+    types = MIME::Types.type_for(file_path)
+    if types.nil? || types.empty?
+      content_type = nil
+    else
+      content_type = types.first.simplified
+    end
+
+    grid = Mongo::Grid.new(MongoMapper.database)
+    grid.put(file, :filename => filename, :content_type => content_type)
   end
 end
 
