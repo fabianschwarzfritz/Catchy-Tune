@@ -104,6 +104,7 @@ class TracksController < ApplicationController
 
   private
   def verify_user_is_artist
+    session[:redirect_origin].push request.url
     redirect_to(:controller => :artists, :action => :new) if @current_user.artist.nil?
   end
 
