@@ -102,11 +102,7 @@ class TracksController < ApplicationController
 
   private
   def verify_user_is_artist
-    if @current_user.is_artist
-      redirect_to(:controller => :artists, :action => :show)
-    else
-      redirect_to(:controller => :sessions, :action => :home)
-    end
+    redirect_to(:controller => :artists, :action => :new) if @current_user.artist.nil?
   end
 
   def update_file(file, track_id)

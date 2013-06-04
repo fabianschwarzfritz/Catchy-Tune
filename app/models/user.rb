@@ -22,10 +22,6 @@ class User
             :confirmation => true
 
 
-  def is_artist
-    return Artist.find(:user => id)
-  end
-
   def match_password(login_password='')
     hashed_password == BCrypt::Engine.hash_secret(login_password, salt)
   end
@@ -43,6 +39,7 @@ class User
   def self.find_by_username(username)
     User.first(:username => username)
   end
+
 
   private
 
