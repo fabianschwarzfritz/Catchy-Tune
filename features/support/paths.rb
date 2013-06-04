@@ -12,6 +12,12 @@ module NavigationHelpers
         '/sessions/home'
       when /the search\s?result\s?page/i
         '/search/results'
+      when /the register-?artist-?\s?page/i
+        '/artists/new'
+      when /the new-track\s?page/i
+        '/tracks/new'
+      when /the song-?\s?detail\s?page/i
+        /^tracks\S+\//
 
       else
         begin

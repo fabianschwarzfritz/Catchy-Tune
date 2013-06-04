@@ -1,6 +1,7 @@
 class TracksController < ApplicationController
 
   before_filter :authenticate_user
+  before_filter :verify_user_is_artist, :only => [:new, :create]
   layout 'home'
 
   def initialize
@@ -52,6 +53,8 @@ class TracksController < ApplicationController
   def create
     params[:track].extend TracksHelper::ParamsExtensions
     @track = Track.new(params[:track].entity_params)
+    @track.artist = @current_user.artist
+
     update_file(params[:track][:file], @track.id)
 
     respond_to do |format|
@@ -100,6 +103,11 @@ class TracksController < ApplicationController
   end
 
   private
+  def verify_user_is_artist
+    session[:redirect_origin].push request.url
+    redirect_to(:controller => :artists, :action => :new) if @current_user.artist.nil?
+  end
+
   def update_file(file, track_id)
     delete_file track_id
 

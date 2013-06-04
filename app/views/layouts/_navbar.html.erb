@@ -22,7 +22,7 @@
       <ul class="nav pull-right">
         <li class="divider-vertical"></li>
         <li><p class="navbar-text pull-right"><%= @current_user.username %></p></li>
-        <li><%= link_to :controller => "sessions", :action => 'logout' do %>
+        <li><%= link_to({:controller => 'sessions', :action => 'logout'}, :id => 'logout') do %>
               <i class="icon-white icon-off"></i>
           <% end %></li>
       </ul>
@@ -33,10 +33,10 @@
             <a href="#">Home</a>
           </li>
           <li>
-            <a href="#upload">Upload</a>
+            <%= link_to('Upload', :controller => :tracks, :action => 'new') %>
           </li>
           <li>
-            <%= link_to "About", :controller => "static", :action => "about" %>
+            <%= link_to 'About', :controller => 'static', :action => 'about' %>
           </li>
         </ul>
       </div>

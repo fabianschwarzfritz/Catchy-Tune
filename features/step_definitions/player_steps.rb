@@ -14,6 +14,10 @@ When(/^I add "([^"]*)" to my playlist$/) do |song|
   click_link_or_button('Add', :text => 'Add')
 end
 
+When(/^I wait for (\d+) second$/) do |seconds|
+  sleep seconds.to_i
+end
+
 
 Then(/^I should have a song in my playlist$/) do
   click_link_or_button('play')

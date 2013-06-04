@@ -15,14 +15,16 @@ Feature: Audio player
       | a song     | an artist | exampledata/song.mp3 |
     And I fill in "Search" with "a song"
     And I press "search-submit"
+    And I wait for 1 second
     And I click "Add"
+    And I wait for 1 second
     When I click "play"
     Then "a song" should be played
 
   @javascript
   Scenario: Try to play a song with an empty playlist
     Given I have no songs in my playlist
-    And I click "play"
+    When I click "play"
     Then no song should be played
 
   @javascript
@@ -32,6 +34,27 @@ Feature: Audio player
       | a song     | an artist | exampledata/song.mp3 |
     And I fill in "Search" with "an artist"
     And I press "search-submit"
+    And I wait for 1 second
     And I click "Add all"
+    And I wait for 1 second
     When I click "play"
     Then "a song" should be played
+
+  @javascript
+  Scenario: Play several songs in a row
+    Given there are these songs:
+      | song_title   | artist         | file                  |
+      | a song       | an artist      | exampledata/song.mp3  |
+      | another song | another artist | exampledata/song2.mp3 |
+    And I fill in "Search" with "a song"
+    And I press "search-submit"
+    And I wait for 1 second
+    And I click "Add"
+    And I fill in "Search" with "another song"
+    And I press "search-submit"
+    And I wait for 1 second
+    And I click "Add"
+    And I wait for 1 second
+    When I click "next"
+    And I wait for 1 second
+    Then "another song" should be played
