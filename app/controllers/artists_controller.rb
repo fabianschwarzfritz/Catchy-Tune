@@ -1,6 +1,8 @@
 class ArtistsController < ApplicationController
 
   before_filter :authenticate_user
+  before_filter :prevent_second_artist_for_user, :only => [:new, :create]
+  before_filter :allow_only_artist_user, :only => [:edit, :update, :destroy]
   layout 'home'
 
   # GET /artists
@@ -45,6 +47,7 @@ class ArtistsController < ApplicationController
   # POST /artists.json
   def create
     @artist = Artist.new(params[:artist])
+    @artist.user = @current_user
 
     respond_to do |format|
       if @artist.save
@@ -83,5 +86,17 @@ class ArtistsController < ApplicationController
       format.html { redirect_to artists_url }
       format.json { head :no_content }
     end
+  end
+
+
+  private
+  def allow_only_artist_user
+    @artist = Artist.find(params[:id])
+
+    redirect_to(:action => :show) unless @artist.user == @current_user
+  end
+
+  def prevent_second_artist_for_user
+    redirect_to(:action => :edit) unless @current_user.artist.nil?
   end
 end

@@ -10,4 +10,5 @@ class Artist
   scope :by_name_contains, lambda { |name| where(:name => (/#{name}/i)) }
 
   self.ensure_index(:name => Mongo::ASCENDING)
+  self.ensure_index(:user_id => Mongo::ASCENDING)
 end

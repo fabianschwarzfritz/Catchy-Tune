@@ -7,7 +7,7 @@ class User
   key :hashed_password, String
   key :salt, String
 
-  belongs_to :artist
+  one :artist
 
 
   before_save :encrypt_password, :clear_password
