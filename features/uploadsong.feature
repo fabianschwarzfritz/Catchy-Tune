@@ -14,7 +14,8 @@ Feature: Upload song
 
   Scenario: Register an artist name
     Given I am logged in with user "John Doe" and password "password"
-    And I am on the register-artist page
+    And I am on the home page
+    And I click "Upload"
     When I fill in "Name" with "Johnny"
     And I press "Create"
     Then I should be on the new-track page
