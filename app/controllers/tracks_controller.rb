@@ -53,6 +53,8 @@ class TracksController < ApplicationController
   def create
     params[:track].extend TracksHelper::ParamsExtensions
     @track = Track.new(params[:track].entity_params)
+    @track.artist = @current_user.artist
+
     update_file(params[:track][:file], @track.id)
 
     respond_to do |format|
