@@ -15,6 +15,7 @@ class UsersController < ApplicationController
         render 'new'
       else
         session[:user_id] = @user.id
+        session[:redirect_origin] = Array.new
         redirect_to(:controller => 'sessions', :action => 'home')
       end
     end

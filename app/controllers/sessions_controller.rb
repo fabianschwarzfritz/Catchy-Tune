@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 
       if authorized_user
         session[:user_id] = authorized_user.id
+        session[:redirect_origin] = Array.new
         redirect_to(:action => 'home')
       else
         flash[:notice] = 'Invalid Username or Password'
@@ -22,7 +23,7 @@ class SessionsController < ApplicationController
 
   def logout
     session[:user_id] = nil
-    session[:playlist] = nil
+    session.delete(:redirect_origin)
     redirect_to :action => 'login'
   end
 

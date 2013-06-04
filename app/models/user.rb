@@ -7,6 +7,9 @@ class User
   key :hashed_password, String
   key :salt, String
 
+  one :artist
+
+
   before_save :encrypt_password, :clear_password
 
   validates :username,
