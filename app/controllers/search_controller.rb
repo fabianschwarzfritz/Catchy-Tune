@@ -75,7 +75,7 @@ class SearchController < ApplicationController
     # query #3: find all tracks
     # search for tracks, except for those which were already found with their artist (in query #2)
     tracks = Track.by_name_contains(query)
-    tracks = tracks.where(:_id => {'$not' => {'$in' => artists_h.keys}}) unless artists_h.empty?
+    tracks = tracks.where(:artist_id => {'$not' => {'$in' => artists_h.keys}}) unless artists_h.empty?
 
     tracks.all
   end
