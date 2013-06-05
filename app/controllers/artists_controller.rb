@@ -97,6 +97,6 @@ class ArtistsController < ApplicationController
   end
 
   def prevent_second_artist_for_user
-    redirect_to(:action => :edit) unless @current_user.artist.nil?
+    redirect_to(edit_artist_path(@current_user.artist.id)) unless @current_user.artist.nil?
   end
 end
