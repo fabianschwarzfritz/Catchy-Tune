@@ -2,15 +2,19 @@
   <h4><%= result.name %></h4>
 
   <div class="container">
-    <% result.tracks_prefetched.each do |track| %>
-        <div class="track-search-result">
-          <p>
-            <%= track.name %>
-            <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
-                        :class => 'btn btn-inverse btn-medium popup hidden',
-                        :onclick => "addSong(\"#{track.id}\"); return false;" %>
-          </p>
-        </div>
+    <% if result.tracks_prefetched.empty? %>
+        <p class="text-info">This artist has not uploaded any songs yet</p>
+    <% else
+         result.tracks_prefetched.each do |track| %>
+            <div class="track-search-result">
+              <p>
+                <%= track.name %>
+                <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
+                            :class => 'btn btn-inverse btn-medium popup hidden',
+                            :onclick => "addSong(\"#{track.id}\"); return false;" %>
+              </p>
+            </div>
+        <% end %>
     <% end %>
     <%= link_to text_with_icon('Add all', 'icon-play-circle icon-white', :before), '#',
                 :class => 'btn btn-inverse btn-small', :onclick => "addArtist(\"#{result.id}\"); return false;" %>
