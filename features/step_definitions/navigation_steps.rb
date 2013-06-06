@@ -51,8 +51,8 @@ When /^I choose "([^\"]*)"$/ do |field|
   choose(field)
 end
 
-When(/^I select the file "([^"]*)" for "([^"]*)"$/) do |filename, field|
-  pending
+When(/^I upload the file "([^"]*)" for "([^"]*)"$/) do |path, field|
+  attach_file(field, path)
 end
 
 
@@ -91,8 +91,12 @@ Then /^the "([^\"]*)" checkbox should not be checked$/ do |label|
   find_field(label).should_not be_checked
 end
 
-Then /^I should be on (.+)$/ do |page_name|
+Then /^I should be on the (.+)$/ do |page_name|
   current_path.should == path_to(page_name)
+end
+
+Then /^I should be on a (.+)$/ do |page|
+  current_path.should match(path_pattern_to(page))
 end
 
 Then /^page should have (.+) message "([^\"]*)"$/ do |type, text|
