@@ -1,12 +1,9 @@
-<% @css_sources << 'application'
-   @js_sources << 'application' -%>
-
 <!DOCTYPE html>
 <html>
 <head>
   <title><%= @page_title.blank? ? 'Catchy Tune' : @page_title %></title>
-  <%= stylesheet_link_tag *(@css_sources.flatten), :media => 'all' %>
-  <%= javascript_include_tag *(@js_sources.flatten) %>
+  <%= stylesheet_link_tag 'application', :media => 'all' %>
+  <%= javascript_include_tag 'application' %>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= csrf_meta_tags %>
 </head>

@@ -1,6 +1,7 @@
 class TracksController < ApplicationController
 
   before_filter :authenticate_user
+  before_filter :allow_only_track_artist_user, :only => [:edit, :update, :destroy]
   before_filter :verify_user_is_artist, :only => [:new, :create]
   layout 'home'
 
@@ -103,6 +104,12 @@ class TracksController < ApplicationController
   end
 
   private
+  def allow_only_track_artist_user
+    @track = Track.find(params[:id])
+
+    redirect_to(:action => :show) unless @track.artist.user == @current_user
+  end
+
   def verify_user_is_artist
     session[:redirect_origin].push request.url
     redirect_to(:controller => :artists, :action => :new) if @current_user.artist.nil?

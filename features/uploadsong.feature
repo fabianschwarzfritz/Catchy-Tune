@@ -31,8 +31,8 @@ Feature: Upload song
     Given an artist "Mozart" with user "mozart" and password "password"
     And I am logged in with user "mozart" and password "password"
     And I am on the new-track page
-    When I fill in "Title" with "A new title"
-    And I select the file "/exampledata/song.mp3" for "file"
+    When I fill in "Name" with "A new title"
+    And I upload the file "exampledata/song.mp3" for "File"
     And I press "Create"
-    Then I should be on the song detail page
+    Then I should be on a song detail page
     And I should see "A new title"

@@ -1,22 +1,23 @@
-<div>
-  <div class="form-actions">
-    <h4 class="span12"><%= result.name %></h4>
+<div class="well">
+  <h4><%= result.name %></h4>
 
-    <div class="span12">
-      <div class="container">
-        <% result.tracks_prefetched.each do |track| %>
-            <div class="row">
-              <div class="span10">
-                <p><%= track.name %></p>
-              </div>
-              <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
-                          :class => 'btn btn-inverse btn-small', :onclick => "addSong(\"#{track.id}\"); return false;" %>
+  <div class="container">
+    <% if result.tracks_prefetched.empty? %>
+        <p class="text-info">This artist has not uploaded any songs yet</p>
+    <% else
+         result.tracks_prefetched.each do |track| %>
+            <div class="track-search-result">
+              <p>
+                <%= track.name %>
+                <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
+                            :class => 'btn btn-inverse btn-medium popup hidden',
+                            :onclick => "addSong(\"#{track.id}\"); return false;" %>
+              </p>
             </div>
         <% end %>
-        <%= link_to text_with_icon('Add all', 'icon-play-circle icon-white', :before), '#',
-                    :class => 'btn btn-inverse btn-small', :onclick => "addArtist(\"#{result.id}\"); return false;" %>
-        <%= link_to 'Show', artist_path(:id => result.id), :class => 'btn btn-primary btn-small', :data => {:pjax => true} %>
-      </div>
-    </div>
+    <% end %>
+    <%= link_to text_with_icon('Add all', 'icon-play-circle icon-white', :before), '#',
+                :class => 'btn btn-inverse btn-small', :onclick => "addArtist(\"#{result.id}\"); return false;" %>
+    <%= link_to 'Show', artist_path(:id => result.id), :class => 'btn btn-primary btn-small', :data => {:pjax => true} %>
   </div>
 </div>
