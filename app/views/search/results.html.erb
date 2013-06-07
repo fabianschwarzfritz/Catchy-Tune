@@ -5,10 +5,8 @@
 
 <div class="container">
   <% @results.each do |result| %>
-      <div class="row">
-        <%= partial_name = result.class.to_s.downcase + '_search_result'
-            render :partial => "#{partial_name}", :locals => {:result => result} rescue
-                    render :partial => 'error_search_result', :locals => {:result => result} %>
-      </div>
+      <%= partial_name = result.class.to_s.downcase + '_search_result'
+          render :partial => "#{partial_name}", :locals => {:result => result} rescue
+                  render :partial => 'error_search_result', :locals => {:result => result} %>
   <% end %>
 </div>
