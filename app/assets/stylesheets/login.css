@@ -1,0 +1,35 @@
+body {
+    background-image: url('noten.jpg');
+}
+
+.box {
+    background-color: white;
+    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, .5);
+    border-radius: 15px;
+}
+
+#thankyou {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#titlebox {
+    padding: 2em;
+    text-align: center;
+}
+
+#subtitlebox {
+    padding-bottom: 4em;
+    text-align: center;
+}
+
+.title {
+    font-size: 5em;
+    color: #0088cc;
+}
+
+.subtitle {
+    text-align: center;
+}

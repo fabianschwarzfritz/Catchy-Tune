@@ -1,45 +1,54 @@
 <% @page_title = 'Log in to Catchy Tune' -%>
+<%= stylesheet_link_tag 'login', :media => 'all' %>
 
 <div class="container">
-  <div class="row">
-    <div class="span6">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque debitis deleniti,
-        dolor dolore est eum hic illo, iusto labore laborum, praesentium quaerat quisquam rerum
-        unde voluptas voluptatem voluptatibus. Quisquam, saepe?
-      </p>
+  <div class="box">
+    <div class="row">
+      <div id="titlebox">
+        <h1 class="title">Catchy Tune</h1>
+      </div>
     </div>
-    <div class="span6">
-      <%= form_for(:login, :url => {:controller => 'sessions', :action => 'login'}, :html => {:class => 'form-signin form-horizontal'}) do |f| %>
-        <div class="control-group">
-          <%= label :login, :username, 'Username', :class => 'control-label' %>
+    <div class="row">
+      <div id="subtitlebox">
+        <h1 class="subtitle">Do your ears a favour.</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span6 offset3">
+        <%= form_for(:login, :url => {:controller => 'sessions', :action => 'login'}, :html => {:class => 'form-signin form-horizontal'}) do |f| %>
+            <div class="control-group">
+              <%= label :login, :username, 'Username', :class => 'control-label' %>
 
-          <div class="controls">
-            <%= f.text_field :username, :placeholder => 'Username' %>
-          </div>
-        </div>
-        <div class="control-group">
-          <%= label :login, :password, 'Password', :class => 'control-label' %>
+              <div class="controls">
+                <%= f.text_field :username, :placeholder => 'Username' %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= label :login, :password, 'Password', :class => 'control-label' %>
 
-          <div class="controls">
-            <%= f.password_field :password, :placeholder => 'Password' %>
-          </div>
-        </div>
+              <div class="controls">
+                <%= f.password_field :password, :placeholder => 'Password' %>
+              </div>
+            </div>
 
-        <div class="control-group">
-          <div class="controls">
-            <p class="text-error"><%= flash[:notice] %></p>
+            <div class="control-group">
+              <div class="controls">
+                <p class="text-error"><%= flash[:notice] %></p>
 
-            <%= f.submit value='Log in', :class => 'btn btn-large btn-primary' %>
-          </div>
-        </div>
+                <%= f.submit value='Log in', :class => 'btn btn-large btn-primary' %>
+              </div>
+            </div>
 
-        <div class="control-group">
-          <div class="controls">
-            <%= link_to 'You are not a member yet? Sign up!', :controller => 'users', :action => 'new' %>
-          </div>
-        </div>
-      <% end %>
+            <div class="control-group">
+              <div class="controls">
+                <%= link_to 'You are not a member yet? Sign up!', :controller => 'users', :action => 'new' %>
+              </div>
+            </div>
+        <% end %>
+      </div>
     </div>
   </div>
+</div>
+<div id="thankyou">
+  <%= link_to 'Thank you for a really cool background image!', 'http://www.flickr.com/photos/60872595@N06/5819184201' %>
 </div>
