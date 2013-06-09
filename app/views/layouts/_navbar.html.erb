@@ -20,7 +20,7 @@
       <ul class="nav pull-right">
         <li class="divider-vertical"></li>
         <li><p class="navbar-text pull-right"><%= @current_user.username %></p></li>
-        <li><%= link_to({:controller => 'sessions', :action => 'logout'}, :id => 'logout') do %>
+        <li><%= link_to({:controller => 'sessions', :action => 'logout'}, :id => 'logout', :data => {:pjax => false}) do %>
               <i class="icon-white icon-off"></i>
           <% end %></li>
       </ul>

@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
       when 'home'
         'home'
       else
-        'application'
+        'login'
     end
   end
 end

@@ -3,6 +3,7 @@ require 'bcrypt'
 class UsersController < ApplicationController
 
   before_filter :forward_when_logged_in, :only => [:new]
+  layout 'login'
 
   def new
     if params.has_key? :user

@@ -1,3 +1,5 @@
+//= require application
+//= require jquery
 //= require jquery.pjax
 
 $(function () {
