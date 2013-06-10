@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'navbar' %>
+
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -26,14 +28,14 @@
       </ul>
 
       <div class="nav-collapse collapse pull-right">
-        <ul class="nav">
-          <li class="active">
-            <a href="#">Home</a>
+        <ul id="navbarbuttonlist" class="nav">
+          <li id="navbarhome" class="active">
+            <%= link_to('Home', :controller => :sessions, :action => 'home') %>
           </li>
-          <li>
+          <li id="navbarupload">
             <%= link_to('Upload', :controller => :tracks, :action => 'new') %>
           </li>
-          <li>
+          <li id="navbarabout">
             <%= link_to 'About', :controller => 'static', :action => 'about' %>
           </li>
         </ul>
