@@ -6,12 +6,12 @@
         <p class="text-info">This artist has not uploaded any songs yet</p>
     <% else
          result.tracks_prefetched.each do |track| %>
-            <div class="track-search-result">
-              <p>
-                <%= track.name %>
-                <%= link_to text_with_icon('Add', 'icon-play-circle icon-white', :before), '#',
-                            :class => 'btn btn-inverse btn-medium popup hidden',
+            <div>
+              <p class="track-search-result">
+                <%= link_to text_with_icon('', 'icon-play-circle icon-white', :before), '#',
+                            :class => 'btn btn-inverse btn-small track-add-btn popup hidden',
                             :onclick => "addSong(\"#{track.id}\"); return false;" %>
+                <%= track.name %>
               </p>
             </div>
         <% end %>

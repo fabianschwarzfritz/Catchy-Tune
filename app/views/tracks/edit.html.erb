@@ -2,5 +2,13 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @track %> |
-<%= link_to 'Back', tracks_path %>
+<div class="controlgroup">
+  <div class="controls">
+    <%= link_to 'Back', :back, :class => 'btn btn-inverse' %>
+    <%= link_to 'Show', track_path(@track), :class => 'btn btn-primary' %>
+
+    <% if @track.artist.user == @current_user %>
+        <%= link_to 'Delete', track_path(@track), :method => :delete, :class => 'btn btn-danger' %>
+    <% end %>
+  </div>
+</div>

@@ -2,12 +2,11 @@ require 'bcrypt'
 
 class UsersController < ApplicationController
 
-  before_filter :save_login_state, :only => [:new, :create]
+  before_filter :forward_when_logged_in, :only => [:new]
+  layout 'login'
 
   def new
-    if not params.has_key? :user
-      @user = User.new
-    else
+    if params.has_key? :user
       @user = User.new(params[:user])
       @user.save
 
@@ -18,6 +17,8 @@ class UsersController < ApplicationController
         session[:redirect_origin] = Array.new
         redirect_to(:controller => 'sessions', :action => 'home')
       end
+    else
+      @user = User.new
     end
   end
 end

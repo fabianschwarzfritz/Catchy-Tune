@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @page_title.blank? ? 'Catchy Tune' : @page_title %></title>
+  <%= stylesheet_link_tag 'login', :media => 'all' %>
+  <%= javascript_include_tag 'login' %>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+  <div class="box">
+    <div class="row">
+      <div id="titlebox">
+        <h1 class="title">Catchy Tune</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div id="subtitlebox">
+        <h1 class="subtitle">Do your ears a favour.</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span6 offset3" id="pjax-container">
+
+        <%= yield %>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div id="thankyou">
+  <%= link_to 'Thank you for a really cool background image!', 'http://www.flickr.com/photos/60872595@N06/5819184201' %>
+</div>
+</body>
+</html>
