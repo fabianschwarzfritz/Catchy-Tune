@@ -20,20 +20,20 @@
       <ul class="nav pull-right">
         <li class="divider-vertical"></li>
         <li><p class="navbar-text pull-right"><%= @current_user.username %></p></li>
-        <li><%= link_to({:controller => 'sessions', :action => 'logout'}, :id => 'logout') do %>
+        <li><%= link_to({:controller => 'sessions', :action => 'logout'}, :id => 'logout', :data => {:pjax => false}) do %>
               <i class="icon-white icon-off"></i>
           <% end %></li>
       </ul>
 
       <div class="nav-collapse collapse pull-right">
-        <ul class="nav">
-          <li class="active">
-            <a href="#">Home</a>
+        <ul id="navbarbuttonlist" class="nav">
+          <li id="navbarhome" class="active">
+            <%= link_to('Home', :controller => :sessions, :action => 'home') %>
           </li>
-          <li>
+          <li id="navbarupload">
             <%= link_to('Upload', :controller => :tracks, :action => 'new') %>
           </li>
-          <li>
+          <li id="navbarabout">
             <%= link_to 'About', :controller => 'static', :action => 'about' %>
           </li>
         </ul>

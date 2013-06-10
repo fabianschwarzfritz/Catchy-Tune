@@ -10,14 +10,15 @@ class ApplicationController < ActionController::Base
 
   protected
   def authenticate_user
-    if session[:user_id]
-      @current_user = User.find session[:user_id]
-    else
-      redirect_to(:controller => 'sessions', :action => 'login')
-    end
+    redirect_to(:controller => 'sessions', :action => 'login') if current_user(session[:user_id]).nil?
   end
 
-  def save_login_state
-      redirect_to(:controller => 'sessions', :action => 'home') if session[:user_id]
+  def forward_when_logged_in
+    redirect_to(:controller => 'sessions', :action => 'home') unless current_user(session[:user_id]).nil?
+  end
+
+  private
+  def current_user(user_id = nil)
+    @current_user = User.find(user_id) unless user_id.nil?
   end
 end

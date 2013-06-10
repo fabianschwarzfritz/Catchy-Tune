@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   before_filter :authenticate_user, :only => [:home]
-  before_filter :save_login_state, :only => [:login]
+  before_filter :forward_when_logged_in, :only => [:login]
 
   layout :get_layout
 
@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
       when 'home'
         'home'
       else
-        'application'
+        'login'
     end
   end
 end
