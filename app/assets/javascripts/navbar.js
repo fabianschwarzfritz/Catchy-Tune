@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    $('#navbarbuttonlist li').click(function (e) {
+    var navbarbuttonlist = $('#navbarbuttonlist li');
+
+    navbarbuttonlist.click(function (e) {
         removeActive();
         var $this = $(this);
         $this.toggleClass('active');
@@ -7,6 +9,6 @@ $(document).ready(function () {
     });
 
     function removeActive() {
-        $('#navbarbuttonlist li').removeClass('active');
+        navbarbuttonlist.removeClass('active');
     };
 });
