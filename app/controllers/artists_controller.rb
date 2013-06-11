@@ -5,17 +5,6 @@ class ArtistsController < ApplicationController
   before_filter :allow_only_artist_user, :only => [:edit, :update, :destroy]
   layout 'home'
 
-  # GET /artists
-  # GET /artists.json
-  def index
-    @artists = Artist.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @artists }
-    end
-  end
-
   # GET /artists/1
   # GET /artists/1.json
   def show
@@ -51,10 +40,10 @@ class ArtistsController < ApplicationController
 
     respond_to do |format|
       if @artist.save
-        format.html { redirect_to session[:redirect_origin].pop || @artist, notice: 'Artist was successfully created.' }
+        format.html { redirect_to session[:redirect_origin].pop || artist_url(@artist), notice: 'Artist was successfully created.' }
         format.json { render json: @artist, status: :created, location: @artist }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @artist.errors, status: :unprocessable_entity }
       end
     end
@@ -67,10 +56,10 @@ class ArtistsController < ApplicationController
 
     respond_to do |format|
       if @artist.update_attributes(params[:artist])
-        format.html { redirect_to @artist, notice: 'Artist was successfully updated.' }
+        format.html { redirect_to artist_url(@artist), notice: 'Artist was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @artist.errors, status: :unprocessable_entity }
       end
     end
@@ -83,7 +72,7 @@ class ArtistsController < ApplicationController
     @artist.destroy
 
     respond_to do |format|
-      format.html { redirect_to artists_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end
@@ -97,6 +86,6 @@ class ArtistsController < ApplicationController
   end
 
   def prevent_second_artist_for_user
-    redirect_to(edit_artist_path(@current_user.artist.id)) unless @current_user.artist.nil?
+    redirect_to(edit_artist_url(@current_user.artist.id)) unless @current_user.artist.nil?
   end
 end
