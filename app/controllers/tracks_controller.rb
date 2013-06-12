@@ -11,17 +11,6 @@ class TracksController < ApplicationController
     super
   end
 
-  # GET /tracks
-  # GET /tracks.json
-  def index
-    @tracks = Track.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @tracks }
-    end
-  end
-
   # GET /tracks/1
   # GET /tracks/1.json
   def show
@@ -52,19 +41,20 @@ class TracksController < ApplicationController
   # POST /tracks
   # POST /tracks.json
   def create
-    params[:track].extend TracksHelper::ParamsExtensions
-    @track = Track.new(params[:track].entity_params)
+    parameters = params[:track]
+    parameters.extend TracksHelper::ParamsExtensions
+    @track = Track.new(parameters.entity_params)
     @track.artist = @current_user.artist
 
-    update_file(params[:track][:file], @track.id)
+    update_file(parameters[:file], @track.id)
 
     respond_to do |format|
       if @track.save
-        format.html { redirect_to @track, notice: 'Track was successfully created.' }
+        format.html { redirect_to track_url(@track), notice: 'Track was successfully created.' }
         format.json { render json: @track, status: :created, location: @track }
       else
         delete_file @track.id
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @track.errors, status: :unprocessable_entity }
       end
     end
@@ -73,17 +63,19 @@ class TracksController < ApplicationController
   # PUT /tracks/1
   # PUT /tracks/1.json
   def update
-    params[:track].extend TracksHelper::ParamsExtensions
+    parameters = params[:track]
+    parameters.extend TracksHelper::ParamsExtensions
+
     @track = Track.find(params[:id])
 
     respond_to do |format|
-      if @track.update_attributes(params[:track].entity_params)
-        update_file(params[:track][:file], @track.id)
+      if @track.update_attributes(parameters.entity_params)
+        update_file(parameters[:file], @track.id)
 
-        format.html { redirect_to @track, notice: 'Track was successfully updated.' }
+        format.html { redirect_to track_url(@track), notice: 'Track was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @track.errors, status: :unprocessable_entity }
       end
     end
@@ -92,13 +84,11 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   # DELETE /tracks/1.json
   def destroy
-    @track = Track.find(params[:id])
-    @track.destroy
-
-    delete_file @track.id
+    Track.destroy(params[:id])
+    delete_file BSON::ObjectId(params[:id])
 
     respond_to do |format|
-      format.html { redirect_to tracks_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end

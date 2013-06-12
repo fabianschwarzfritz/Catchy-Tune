@@ -58,5 +58,5 @@ Feature: User management
 
   Scenario: Auto-forwarding when already logged in
     Given I am logged in with user "existinguser" and password "password"
-    When I visit the root page
+    When I visit the login page
     Then I should be on the home page

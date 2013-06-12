@@ -1,9 +1,8 @@
 Catchytune::Application.routes.draw do
-  get "static/about"
-
   get 'sessions/login'
   post 'sessions/login'
   get 'sessions/logout'
+  post 'sessions/logout'
   get 'sessions/home'
 
   get 'users/new'
@@ -16,16 +15,17 @@ Catchytune::Application.routes.draw do
   post 'playlist/add'
   get 'playlist/current_song'
   get 'playlist/next'
-  get 'playlist/showcurrentsong'
 
-  root :to => "sessions#login"
-  match "signup", :to => "users#new"
-  match "login", :to => "sessions#login"
-  match "logout", :to => "sessions#logout"
-  match "home", :to => "sessions#home"
+  get 'static/about'
 
-  resources :tracks
-  resources :artists
+  root :to => 'sessions#home'
+  match 'signup', :to => 'users#new'
+  match 'login', :to => 'sessions#login'
+  match 'logout', :to => 'sessions#logout'
+  match 'home', :to => 'sessions#home'
+
+  resources :tracks, :except => :index
+  resources :artists, :except => :index
 
 
   # The priority is based upon order of creation:
