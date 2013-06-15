@@ -4,6 +4,7 @@
 
 body {
     background-image: url('noten.jpg');
+    background-size: cover;
 }
 
 .box {
